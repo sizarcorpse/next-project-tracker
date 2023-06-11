@@ -24,12 +24,12 @@ const Header = () => {
           {!user && (
             <>
               <li>
-                <Link href="/login" className="text-ct-dark-600">
+                <Link href="/signin" className="text-ct-dark-600">
                   Login
                 </Link>
               </li>
               <li>
-                <Link href="/register" className="text-ct-dark-600">
+                <Link href="/signup" className="text-ct-dark-600">
                   Register
                 </Link>
               </li>
