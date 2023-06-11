@@ -31,7 +31,7 @@ const SignUpPage = () => {
             </h2>
             <span className="text-sm text-slate-200 ">
               Already have an account?{" "}
-              <Link href="/auth/login" className="text-amber-300">
+              <Link href="/signin" className="text-amber-300">
                 Sign in
               </Link>
             </span>
