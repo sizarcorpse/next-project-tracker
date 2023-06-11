@@ -1,16 +1,20 @@
 import { prisma } from "@/libs/prisma";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 import { User } from "@prisma/client";
 import { compare } from "bcryptjs";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
+
 export const authOptions: NextAuthOptions = {
   pages: {
-    signIn: "/login",
+    signIn: "/signin",
   },
   session: {
     strategy: "jwt",
   },
+  // not sure if this is needed
+  // adapter: PrismaAdapter(prisma) as any,
 
   providers: [
     GitHubProvider({
@@ -28,9 +32,10 @@ export const authOptions: NextAuthOptions = {
         },
         password: { label: "Password", type: "password" },
       },
+
       async authorize(credentials) {
         if (!credentials?.email || !credentials.password) {
-          return null;
+          throw new Error("Invalid credentials");
         }
 
         const user = await prisma.user.findUnique({
@@ -40,7 +45,7 @@ export const authOptions: NextAuthOptions = {
         });
 
         if (!user || !(await compare(credentials.password, user.password))) {
-          return null;
+          throw new Error("Invalid credentials");
         }
 
         return {
