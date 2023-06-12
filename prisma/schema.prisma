@@ -18,7 +18,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
-  password      String
+  password      String?
   profile       Profile?
   accounts      Account[]
   sessions      Session[]
@@ -56,12 +56,4 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
 }
