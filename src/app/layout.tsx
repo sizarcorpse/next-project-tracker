@@ -1,5 +1,3 @@
-import Header from "@/components/Header";
-
 import { getCurrentUser } from "@/actions";
 import { NavigationBar } from "@/components/navigation";
 import { NextAuthProvider } from "@/providers/NextAuthProvider";
@@ -27,7 +25,6 @@ export default async function RootLayout({
       <body className={inter.className}>
         <NextAuthProvider>
           <ToasterProvider />
-          {/* <Header /> */}
           <NavigationBar user={user as any} />
           {children}
         </NextAuthProvider>
