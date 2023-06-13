@@ -25,10 +25,20 @@ model User {
 }
 
 model Profile {
-  id     String  @id @default(uuid())
-  userId String  @unique
-  bio    String?
-  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          String  @id @default(uuid())
+  userId      String  @unique
+  designation String?
+  company     String?
+  website     String?
+  location    String?
+  gender      String?
+  bio         String?
+  linkedin    String?
+  github      String?
+  twitter     String?
+  facebook    String?
+  contact     String?
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Account {
