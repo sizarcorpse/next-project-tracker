@@ -37,6 +37,7 @@ model Profile {
   github      String?
   twitter     String?
   facebook    String?
+  instagram   String?
   contact     String?
   user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
