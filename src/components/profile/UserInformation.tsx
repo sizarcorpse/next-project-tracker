@@ -1,5 +1,8 @@
-import { ProfilePhoto } from "@/components/profile/";
+"use client";
 
+import { ProfilePhoto } from "@/components/profile/";
+import Link from "next/link";
+import { RiEditLine } from "react-icons/ri";
 interface UserInformationProps {
   data: {
     name: string | null;
@@ -15,6 +18,21 @@ const RoleChip: React.FC<{ role: string }> = ({ role }) => {
     <span className="bg-slate-200 text-slate-800 px-3 py-1 rounded-xl text-xs font-semibold">
       {role}
     </span>
+  );
+};
+
+const EditButton: React.FC = ({}) => {
+  return (
+    <Link
+      href="/profile/update"
+      className="group flex flex-row items-center justify-center gap-2 bg-slate-200 text-slate-800 px-3 py-2 rounded-xl text-xs font-semibold"
+    >
+      <span>Update Profile</span>
+      <RiEditLine
+        size="1rem"
+        className="group-hover:text-amber-500 transition-colors"
+      />
+    </Link>
   );
 };
 
@@ -36,6 +54,7 @@ const UserInformation: React.FC<UserInformationProps> = ({
         </span>
         <span className="text-sm font-medium text-slate-700">{email}</span>
       </h1>
+      <EditButton />
     </div>
   );
 };
