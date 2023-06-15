@@ -1,4 +1,5 @@
 "use client";
+
 import { Listbox } from "@headlessui/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -41,14 +42,6 @@ const GENDER_DATA = [
     value: "Other",
   },
 ];
-
-const InputFieldStyles = (errors: any, field: any, isIcon?: boolean) => {
-  return `w-full ${
-    isIcon ? "pl-10 py-4 pr-4" : "p-4"
-  }  bg-slate-200 border rounded-md outline-none text-sm text-slate-800 font-normal disabled:opacity-70 disabled:cursor-not-allowed placeholder:font-normal placeholder:text-slate-400 ${
-    errors[field]?.message ? "border-rose-700" : "border-transparent"
-  }`;
-};
 
 const FormGroup = ({
   children,
@@ -117,10 +110,17 @@ const FormControl = ({
   );
 };
 
+const inputFieldStyles = (errors: any, field: any, isIcon?: boolean) => {
+  return `w-full ${
+    isIcon ? "pl-10 py-4 pr-4" : "p-4"
+  }  bg-slate-200 border rounded-md outline-none text-sm text-slate-800 font-normal disabled:opacity-70 disabled:cursor-not-allowed placeholder:font-normal placeholder:text-slate-400 ${
+    errors[field]?.message ? "border-rose-700" : "border-transparent"
+  }`;
+};
+
 const ProfileUpdateForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedGender, setSelectedGender] = useState(GENDER_DATA[0]);
-
   const router = useRouter();
 
   const form = useForm<FieldValues>({
@@ -152,7 +152,7 @@ const ProfileUpdateForm = () => {
     console.log(data);
   };
 
-  const onError = (error: FieldErrors<FieldValues>) => {};
+  const onError = (errors: FieldErrors<FieldValues>) => {};
 
   return (
     <div className="w-full">
@@ -170,7 +170,7 @@ const ProfileUpdateForm = () => {
                 {...register("designation")}
                 placeholder="Designation"
                 type="text"
-                className={InputFieldStyles(errors, "designation")}
+                className={inputFieldStyles(errors, "designation")}
               />
             </FormControl>
 
@@ -181,7 +181,7 @@ const ProfileUpdateForm = () => {
                 {...register("company")}
                 placeholder="Company Name"
                 type="text"
-                className={InputFieldStyles(errors, "company")}
+                className={inputFieldStyles(errors, "company")}
               />
             </FormControl>
           </FormGroup>
@@ -202,7 +202,7 @@ const ProfileUpdateForm = () => {
                 {...register("location")}
                 placeholder="Location Name"
                 type="text"
-                className={InputFieldStyles(errors, "location")}
+                className={inputFieldStyles(errors, "location")}
               />
             </FormControl>
 
@@ -221,7 +221,7 @@ const ProfileUpdateForm = () => {
                 })}
                 placeholder="Contact Email"
                 type="email"
-                className={InputFieldStyles(errors, "contact")}
+                className={inputFieldStyles(errors, "contact")}
               />
             </FormControl>
 
@@ -240,7 +240,7 @@ const ProfileUpdateForm = () => {
                 })}
                 placeholder="Website"
                 type="text"
-                className={InputFieldStyles(errors, "website")}
+                className={inputFieldStyles(errors, "website")}
               />
             </FormControl>
           </FormGroup>
@@ -300,7 +300,7 @@ const ProfileUpdateForm = () => {
                 })}
                 rows={5}
                 placeholder="What is in your mind ?"
-                className={InputFieldStyles(errors, "bio")}
+                className={inputFieldStyles(errors, "bio")}
               />
             </FormControl>
           </FormGroup>
@@ -329,7 +329,7 @@ const ProfileUpdateForm = () => {
                 })}
                 placeholder="Linkedin"
                 type="text"
-                className={`${InputFieldStyles(errors, "linkedin")} px-10`}
+                className={`${inputFieldStyles(errors, "linkedin")} px-10`}
               />
             </FormControl>
 
@@ -352,7 +352,7 @@ const ProfileUpdateForm = () => {
                 })}
                 placeholder="Github"
                 type="text"
-                className={`${InputFieldStyles(errors, "github")} px-10`}
+                className={`${inputFieldStyles(errors, "github")} px-10`}
               />
             </FormControl>
 
@@ -375,7 +375,7 @@ const ProfileUpdateForm = () => {
                 })}
                 placeholder="Twitter"
                 type="text"
-                className={`${InputFieldStyles(errors, "twitter")} px-10`}
+                className={`${inputFieldStyles(errors, "twitter")} px-10`}
               />
             </FormControl>
 
@@ -398,7 +398,7 @@ const ProfileUpdateForm = () => {
                 })}
                 placeholder="Facebook"
                 type="text"
-                className={`${InputFieldStyles(errors, "facebook")} px-10`}
+                className={`${inputFieldStyles(errors, "facebook")} px-10`}
               />
             </FormControl>
 
@@ -421,7 +421,7 @@ const ProfileUpdateForm = () => {
                 })}
                 placeholder="Instagram"
                 type="text"
-                className={`${InputFieldStyles(errors, "instagram", true)}`}
+                className={`${inputFieldStyles(errors, "instagram", true)}`}
               />
             </FormControl>
           </FormGroup>
