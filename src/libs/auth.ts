@@ -42,13 +42,12 @@ export const authOptions: NextAuthOptions = {
         }
 
         // user
-        // return {
-        //   id: user.id,
-        //   email: user.email,
-        //   name: user.name,
-        //   randomKey: "Hey cool",
-        // };
-        return user;
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          uxdi: "🚀",
+        };
       },
     }),
   ],
@@ -77,23 +76,26 @@ export const authOptions: NextAuthOptions = {
       // console.log("Session Callback", { session, token });
       return {
         ...session,
+        accessToken: token.accessToken,
         user: {
           ...session.user,
           id: token.id,
-          randomKey: token.randomKey,
+          uxdi: "🤖",
         },
       };
     },
-    jwt: ({ token, user }) => {
+    jwt: ({ token, user, account }) => {
       // console.log("JWT Callback", { token, user });
       if (user) {
         const u = user as unknown as any;
         return {
           ...token,
           id: u.id,
-          randomKey: u.randomKey,
+          accessToken: account?.access_token || "",
+          uxdi: "💊",
         };
       }
+
       return token;
     },
   },
