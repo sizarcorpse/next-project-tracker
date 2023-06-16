@@ -1,9 +1,9 @@
 "use client";
-
 import { Listbox } from "@headlessui/react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
-import { FieldErrors, FieldValues, useForm } from "react-hook-form";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { IconType } from "react-icons/lib";
 import {
@@ -19,6 +19,7 @@ import {
   RiUserShared2Line,
   RiUserVoiceLine,
 } from "react-icons/ri";
+import useSWR from "swr";
 
 const GENDER_DATA = [
   {
@@ -118,10 +119,43 @@ const inputFieldStyles = (errors: any, field: any, isIcon?: boolean) => {
   }`;
 };
 
+const ProfileFetchError = () => {
+  const router = useRouter();
+
+  return (
+    <div className="w-full flex flex-col items-center justify-center p-4 rounded-md gap-8 bg-slate-200 sm:p-6 md:p-12 md:gap-12">
+      <div className="flex flex-col items-center justify-center gap-2">
+        <h2 className="text-xl font-semibold text-center text-slate-800">
+          Something went wrong
+        </h2>
+        <p className="text-sm text-center text-slate-800">
+          We are unable to fetch your profile. Please try again after sometime.
+        </p>
+      </div>
+      <div className="flex flex-row items-center justify-center gap-4">
+        <button
+          title="Retry"
+          className="bg-slate-100 text-slate-800 text-sm font-semibold px-6 py-2 rounded-md hover:bg-amber-400 transition-colors"
+          onClick={() => router.refresh()}
+        >
+          Retry
+        </button>
+        <button
+          className="bg-slate-100 text-slate-800 text-sm font-semibold px-6 py-2 rounded-md hover:bg-emerald-400 transition-colors"
+          onClick={() => router.back()}
+        >
+          Go Back
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const ProfileUpdateForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedGender, setSelectedGender] = useState(GENDER_DATA[0]);
-  const router = useRouter();
+
+  const { data: profile, error, mutate } = useSWR("/api/user/profile");
 
   const form = useForm<FieldValues>({
     defaultValues: {
@@ -145,18 +179,51 @@ const ProfileUpdateForm = () => {
     setValue,
     register,
     handleSubmit,
+    reset,
     formState: { errors, isValid, isDirty, isSubmitting, dirtyFields },
   } = form;
 
+  useEffect(() => {
+    if (profile) {
+      reset(profile.data);
+
+      const g = GENDER_DATA.filter((item) => {
+        return item.value === profile.data.gender;
+      });
+      if (g.length > 0) {
+        setSelectedGender(g[0]);
+      }
+    }
+  }, [profile, reset]);
+
   const onSubmit = async (data: any) => {
-    console.log(data);
+    try {
+      setIsLoading(true);
+      const res = await fetch("/api/user/profile", {
+        method: "PATCH",
+        body: JSON.stringify(data),
+      });
+      const json = await res.json();
+
+      if (!res.ok) {
+        throw new Error(json.message);
+      }
+      toast.success(json.message);
+      setIsLoading(false);
+      mutate();
+    } catch (error: any) {
+      toast.error(error.message);
+      setIsLoading(false);
+    }
   };
 
-  const onError = (errors: FieldErrors<FieldValues>) => {};
+  if (error) {
+    return <ProfileFetchError />;
+  }
 
   return (
     <div className="w-full">
-      <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div className="flex flex-col gap-4">
           <FormGroup title="Company Information" icon={RiHotelLine}>
             <FormControl
@@ -249,7 +316,10 @@ const ProfileUpdateForm = () => {
             <Listbox
               value={selectedGender}
               onChange={(e) => {
-                setValue("gender", e.value);
+                setValue("gender", e.value, {
+                  shouldValidate: true,
+                  shouldDirty: true,
+                });
                 setSelectedGender(e);
               }}
             >
@@ -392,7 +462,7 @@ const ProfileUpdateForm = () => {
                 {...register("facebook", {
                   pattern: {
                     value:
-                      /^(https?:\/\/)?(www\.)?(facebook\.com\/)?(#!\/)?[a-zA-Z0-9_]+\/?$/i,
+                      /^(https?:\/\/)?(www\.)?(facebook\.com\/)?(#!\/)?[a-zA-Z0-9._]+\/?$/i,
                     message: "Website must be a valid Facebook username",
                   },
                 })}
@@ -415,7 +485,7 @@ const ProfileUpdateForm = () => {
                 {...register("instagram", {
                   pattern: {
                     value:
-                      /^(https?:\/\/)?(www\.)?(instagram\.com\/)?(#!\/)?[a-zA-Z0-9_]+\/?$/i,
+                      /^(https?:\/\/)?(www\.)?(instagram\.com\/)?(#!\/)?[a-zA-Z0-9._]+\/?$/i,
                     message: "Website must be a valid Instagram username",
                   },
                 })}
@@ -426,16 +496,23 @@ const ProfileUpdateForm = () => {
             </FormControl>
           </FormGroup>
 
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col items-center justify-center gap-4">
             <div className="w-full">
               <button
+                disabled={isLoading || !isDirty || !isValid}
                 type="submit"
                 title="Signup Button"
                 className="w-full py-4 px-8 text-center duration-500 bg-[length:200%_auto] text-light rounded-md font-semibold shadow-md bg-gradient-to-r from-red-500 via-amber-500 to-red-500 cursor-pointer select-none touch-manipulation hover:bg-right-top focus-rose disabled:bg-gradient-to-r disabled:from-zinc-500 disabled:via-slate-500 disabled:to-zinc-500 disabled:cursor-not-allowed disabled:touch-manipulation disabled:hover:bg-right-top"
               >
-                Continue
+                Update Profile
               </button>
             </div>
+            <Link
+              href="/profile"
+              className="text-sm text-amber-500 font-semibold hover:text-rose-500"
+            >
+              Cancel Updating Profile Info
+            </Link>
           </div>
         </div>
       </form>
