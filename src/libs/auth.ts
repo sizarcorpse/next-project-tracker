@@ -1,12 +1,20 @@
 import { prisma } from "@/libs/prisma";
 // import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-
-import { User } from "@prisma/client";
 import { compare } from "bcryptjs";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
+
+type UT = {
+  session: {
+    id: String;
+    name: String;
+    email: String;
+    image: String;
+    username: String;
+  };
+};
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma) as any,
@@ -60,43 +68,64 @@ export const authOptions: NextAuthOptions = {
   debug: process.env.NODE_ENV === "development",
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
-      // console.log(
-      //   "signIn callbacks",
-      //   user,
-      //   account,
-      //   profile,
-      //   email,
-      //   credentials
-      // );
+    signIn: () => {
       return true;
     },
 
-    session: ({ session, token }) => {
-      // console.log("Session Callback", { session, token });
-      return {
-        ...session,
-        accessToken: token.accessToken,
-        user: {
-          ...session.user,
-          id: token.id,
-          uxdi: "🤖",
-        },
-      };
+    session: async ({ token, session }) => {
+      if (token) {
+        session.user.id = token.id;
+        session.user.name = token.name;
+        session.user.email = token.email;
+        session.user.image = token.picture;
+        session.user.username = token.username;
+      }
+      return session;
     },
-    jwt: ({ token, user, account }) => {
-      // console.log("JWT Callback", { token, user });
-      if (user) {
-        const u = user as unknown as any;
-        return {
-          ...token,
-          id: u.id,
-          accessToken: account?.access_token || "",
-          uxdi: "💊",
-        };
+    jwt: async ({ token, user }) => {
+      const u = await prisma.user.findUnique({
+        where: {
+          email: token.email as string,
+        },
+        include: {
+          profile: true,
+        },
+      });
+
+      if (!u) {
+        token.id = user.id;
+        return token;
       }
 
-      return token;
+      if (!u.username || u.username === null) {
+        await prisma.user.update({
+          where: {
+            id: u.id,
+          },
+          data: {
+            username: u.email?.split("@")[0],
+          },
+        });
+      }
+
+      if (!u.profile || u.profile === null) {
+        await prisma.profile.create({
+          data: {
+            user: {
+              connect: {
+                id: u.id,
+              },
+            },
+          },
+        });
+      }
+      return {
+        id: u.id,
+        name: u.name,
+        email: u.email,
+        picture: u.image,
+        username: u.username,
+      };
     },
   },
 };
