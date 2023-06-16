@@ -1,24 +1,11 @@
 import { authOptions } from "@/libs/auth";
 import { prisma } from "@/libs/prisma";
 import { getServerSession } from "next-auth/next";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-interface Session {
-  user: {
-    name: string;
-    email: string;
-    image?: string;
-    id: string;
-    uxdi: string;
-  };
-  accessToken: string;
-}
-
-export async function GET(req: Request) {
+export async function GET() {
   try {
-    const session = (await getServerSession(authOptions)) as Session;
-
-    console.log(session);
+    const session = await getServerSession(authOptions);
 
     if (!session) {
       return new NextResponse(
@@ -54,6 +41,12 @@ export async function GET(req: Request) {
       { status: 200 }
     );
   } catch (error: any) {
-    console.log(error);
+    return new NextResponse(
+      JSON.stringify({
+        status: "error",
+        data: "Profile not found",
+      }),
+      { status: 500 }
+    );
   }
 }
