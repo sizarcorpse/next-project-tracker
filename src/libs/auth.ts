@@ -6,16 +6,6 @@ import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
 
-type UT = {
-  session: {
-    id: String;
-    name: String;
-    email: String;
-    image: String;
-    username: String;
-  };
-};
-
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma) as any,
   providers: [
@@ -49,7 +39,6 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Invalid credentials");
         }
 
-        // user
         return {
           id: user.id,
           email: user.email,
@@ -82,7 +71,13 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
-    jwt: async ({ token, user }) => {
+    jwt: async ({ token, user, trigger, session }) => {
+      if (trigger === "update") {
+        return {
+          ...token,
+          ...session.user,
+        };
+      }
       const u = await prisma.user.findUnique({
         where: {
           email: token.email as string,
@@ -119,6 +114,7 @@ export const authOptions: NextAuthOptions = {
           },
         });
       }
+
       return {
         id: u.id,
         name: u.name,
