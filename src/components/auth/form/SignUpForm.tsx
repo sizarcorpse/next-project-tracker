@@ -127,7 +127,7 @@ const SignUpForm = () => {
                   },
                 })}
                 placeholder="Username"
-                type="email"
+                type="text"
                 className={`w-full px-10 py-4 bg-slate-950 border rounded-md outline-none text-sm text-slate-100 font-normal disabled:opacity-70 disabled:cursor-not-allowed placeholder:font-normal ${
                   errors.username?.message
                     ? "border-rose-700"
