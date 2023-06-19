@@ -50,7 +50,7 @@ const SignUpForm = () => {
       await signIn("credentials", {
         email: data.email,
         password: data.password,
-        callbackUrl: `/u/profile`,
+        callbackUrl: `/`,
       });
     } catch (error: any) {
       setIsLoading(false);
