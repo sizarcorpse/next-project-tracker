@@ -262,7 +262,7 @@ const AccountUpdateForm = () => {
               </button>
             </div>
             <Link
-              href="/profile"
+              href="/u/profile"
               className="text-sm text-amber-500 font-semibold hover:text-rose-500"
             >
               Cancel Account Setting

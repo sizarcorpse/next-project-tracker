@@ -47,11 +47,10 @@ const SignUpForm = () => {
         return;
       }
 
-      // signIn(undefined, { callbackUrl: "/" });
       await signIn("credentials", {
         email: data.email,
         password: data.password,
-        callbackUrl: `/profile`,
+        callbackUrl: `/u/profile`,
       });
     } catch (error: any) {
       setIsLoading(false);

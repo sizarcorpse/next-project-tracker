@@ -8,7 +8,7 @@ const LoginWithGithub = () => {
       className="w-full rounded-md bg-gradient-to-r from-red-500 via-amber-500 to-red-500 p-[1px]"
       onClick={() =>
         signIn("github", {
-          callbackUrl: "/profile",
+          callbackUrl: "/",
         })
       }
     >

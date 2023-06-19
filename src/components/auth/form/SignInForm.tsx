@@ -41,7 +41,6 @@ const SignInForm = () => {
       });
 
       setIsLoading(false);
-      console.log(res);
 
       if (!res?.error) {
         toast.success("Logged in");

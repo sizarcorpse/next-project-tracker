@@ -19,12 +19,12 @@ const MENU_PRIMARY = [
   {
     label: "Profile",
     icon: RiUserLine,
-    href: "/profile",
+    href: "/u/profile",
   },
   {
     label: "Account Settings",
     icon: RiUserSettingsLine,
-    href: "/accounts",
+    href: "/u/account-settings",
   },
   {
     label: "Dashboard",
