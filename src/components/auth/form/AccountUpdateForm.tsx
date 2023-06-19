@@ -94,10 +94,9 @@ const AccountUpdateForm = () => {
 
   return (
     <div className="w-full">
-      {JSON.stringify(session, null, 2)}
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div className="flex flex-col gap-4">
-          <FormGroup title="User Information" subtitle="Your full name">
+          <FormGroup title="User Information">
             <FormControl id="name" errors={errors} dirtyFields={dirtyFields}>
               <input
                 id="name"
