@@ -1,4 +1,5 @@
 "use client";
+
 import {
   FormControl,
   FormDataFetchError,
@@ -34,6 +35,8 @@ const AccountUpdateForm = () => {
       name: "",
       username: "",
       email: "",
+      currentPassword: "",
+      newPassword: "",
     },
     mode: "onBlur",
   });
@@ -42,8 +45,11 @@ const AccountUpdateForm = () => {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors, isValid, isDirty, dirtyFields },
   } = form;
+
+  const watchCurrentPassword = watch("currentPassword");
 
   useEffect(() => {
     if (user) {
@@ -63,6 +69,8 @@ const AccountUpdateForm = () => {
           name: data.name,
           username: data.username,
           email: data.email,
+          currentPassword: data.currentPassword,
+          newPassword: data.newPassword,
         }),
       });
       const json = await res.json();
@@ -188,6 +196,57 @@ const AccountUpdateForm = () => {
                 placeholder="Email"
                 type="text"
                 className={inputFieldStyles(errors, "email")}
+              />
+            </FormControl>
+          </FormGroup>
+          <FormGroup
+            title="Password"
+            subtitle="Only credential user can change their password. OAuth can not set password."
+          >
+            <FormControl
+              id="currentPassword"
+              errors={errors}
+              dirtyFields={dirtyFields}
+            >
+              <input
+                id="currentPassword"
+                disabled={isLoading}
+                {...register("currentPassword", {})}
+                placeholder="Current Password"
+                type="password"
+                className={inputFieldStyles(errors, "currentPassword")}
+              />
+            </FormControl>
+            <FormControl
+              id="newPassword"
+              errors={errors}
+              dirtyFields={dirtyFields}
+            >
+              <input
+                id="newPassword"
+                disabled={isLoading}
+                {...register("newPassword", {
+                  required: {
+                    value: watchCurrentPassword === "" ? false : true,
+                    message: "New Password is required",
+                  },
+                  pattern: {
+                    value:
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                    message:
+                      "Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special character `tyUjs&6Y98`",
+                  },
+                  validate: {
+                    isPasswordMatch: (value) => {
+                      if (value === watchCurrentPassword) {
+                        return "New Password must be different from Current Password";
+                      }
+                    },
+                  },
+                })}
+                placeholder="New Password"
+                type="password"
+                className={inputFieldStyles(errors, "newPassword")}
               />
             </FormControl>
           </FormGroup>
