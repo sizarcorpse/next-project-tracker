@@ -5,6 +5,7 @@ import {
   FormDataFetchError,
   FormGroup,
 } from "@/components/auth/form/ui";
+
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -199,6 +200,7 @@ const AccountUpdateForm = () => {
               />
             </FormControl>
           </FormGroup>
+
           <FormGroup
             title="Password"
             subtitle="Only credential user can change their password. OAuth can not set password."
@@ -211,7 +213,7 @@ const AccountUpdateForm = () => {
               <input
                 id="currentPassword"
                 disabled={isLoading}
-                {...register("currentPassword", {})}
+                {...register("currentPassword")}
                 placeholder="Current Password"
                 type="password"
                 className={inputFieldStyles(errors, "currentPassword")}
@@ -227,7 +229,7 @@ const AccountUpdateForm = () => {
                 disabled={isLoading}
                 {...register("newPassword", {
                   required: {
-                    value: watchCurrentPassword === "" ? false : true,
+                    value: watchCurrentPassword,
                     message: "New Password is required",
                   },
                   pattern: {
@@ -238,7 +240,7 @@ const AccountUpdateForm = () => {
                   },
                   validate: {
                     isPasswordMatch: (value) => {
-                      if (value === watchCurrentPassword) {
+                      if (value === watchCurrentPassword && value !== "") {
                         return "New Password must be different from Current Password";
                       }
                     },
