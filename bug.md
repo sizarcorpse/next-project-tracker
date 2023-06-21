@@ -6,4 +6,4 @@
 - [ ] Add-Feature Email verification.
 - [ ] Add-Feature Forget password.
 - [ ] Add-Feature Update profile picture.
-- [ ] Fix Some of old url left in few pages.
+- [x] Fix Some of old url left in few pages.
