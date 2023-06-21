@@ -165,7 +165,7 @@ export async function PATCH(request: Request) {
     return new NextResponse(
       JSON.stringify({
         status: "ok",
-        data: "user",
+        data: user,
       }),
       { status: 200 }
     );
