@@ -12,7 +12,7 @@ const SignInForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/profile";
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   const form = useForm<FieldValues>({
     defaultValues: {

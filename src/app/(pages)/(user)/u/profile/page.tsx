@@ -13,7 +13,7 @@ const Container = ({ children }: { children: React.ReactNode }) => {
 const ProfilePage = async () => {
   const user = await getCurrentUser();
   if (!user) {
-    redirect("/signin?callbackUrl=/profile");
+    redirect("/signin?callbackUrl=/u/profile");
   }
 
   return (
