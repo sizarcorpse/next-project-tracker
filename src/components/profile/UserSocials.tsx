@@ -26,11 +26,13 @@ interface UserSocialsProps {
 
 const UserSocialsLink: React.FC<UserSocialLinkProp> = ({ url, icon }) => {
   const Icon = icon;
-
+  const externalUrl = url.startsWith("https://www") ? url : `https://${url}`;
   return (
     <Link
-      href={url}
+      href={externalUrl}
       target="_blank"
+      rel="noopener noreferrer"
+      passHref={true}
       className="flex flex-row items-center justify-center text-base text-slate-800 bg-slate-200 p-2 rounded-full hover:bg-slate-300 hover:text-rose-400 transition-colors"
     >
       <Icon />

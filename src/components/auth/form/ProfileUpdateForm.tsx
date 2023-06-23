@@ -393,7 +393,7 @@ const ProfileUpdateForm = () => {
                 {...register("linkedin", {
                   pattern: {
                     value:
-                      /^(https?:\/\/)?(www\.)?(linkedin\.com\/)?(in\/[a-z0-9_-]+\/?)?$/i,
+                      /^(https?:\/\/)?(www\.)?linkedin\.com\/(in|pub|company)\/[a-zA-Z0-9\-_]+\/?$/i,
                     message: "Website must be a valid Linkedin username",
                   },
                 })}
@@ -416,7 +416,7 @@ const ProfileUpdateForm = () => {
                 {...register("github", {
                   pattern: {
                     value:
-                      /^(https?:\/\/)?(www\.)?(github\.com\/)?[a-zA-Z0-9](?:[a-zA-Z0-9]|-(?=[a-zA-Z0-9])){0,38}\/?$/i,
+                      /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9-]+\/?$/i,
                     message: "Website must be a valid Github username",
                   },
                 })}
@@ -439,7 +439,7 @@ const ProfileUpdateForm = () => {
                 {...register("twitter", {
                   pattern: {
                     value:
-                      /^(https?:\/\/)?(www\.)?(twitter\.com\/)?(#!\/)?[a-zA-Z0-9_]+\/?$/i,
+                      /^(https?:\/\/)?(www\.)?twitter\.com\/[a-zA-Z0-9_\.]+\/?$/i,
                     message: "Website must be a valid Twitter username",
                   },
                 })}
@@ -462,7 +462,7 @@ const ProfileUpdateForm = () => {
                 {...register("facebook", {
                   pattern: {
                     value:
-                      /^(https?:\/\/)?(www\.)?(facebook\.com\/)?(#!\/)?[a-zA-Z0-9._]+\/?$/i,
+                      /^(https?:\/\/)?(www\.)?facebook\.com\/[a-z0-9_\.]+\/?$/i,
                     message: "Website must be a valid Facebook username",
                   },
                 })}
@@ -485,7 +485,7 @@ const ProfileUpdateForm = () => {
                 {...register("instagram", {
                   pattern: {
                     value:
-                      /^(https?:\/\/)?(www\.)?(instagram\.com\/)?(#!\/)?[a-zA-Z0-9._]+\/?$/i,
+                      /^(https?:\/\/)?(www\.)?instagram\.com\/[a-z0-9_\.]+\/?$/i,
                     message: "Website must be a valid Instagram username",
                   },
                 })}

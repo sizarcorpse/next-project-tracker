@@ -1,18 +1,14 @@
 import { z } from "zod";
 
 const linkedin =
-  /^(https?:\/\/)?(www\.)?(linkedin\.com\/)?(in\/[a-z0-9_-]+\/?)?$/i;
-const github =
-  /^(https?:\/\/)?(www\.)?(github\.com\/)?[a-zA-Z0-9](?:[a-zA-Z0-9]|-(?=[a-zA-Z0-9])){0,38}\/?$/i;
+  /^(https?:\/\/)?(www\.)?linkedin\.com\/(in|pub|company)\/[a-zA-Z0-9\-_]+\/?$/i;
+const github = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9-]+\/?$/i;
 
-const twitter =
-  /^(https?:\/\/)?(www\.)?(twitter\.com\/)?(#!\/)?[a-zA-Z0-9_]+\/?$/i;
+const twitter = /^(https?:\/\/)?(www\.)?twitter\.com\/[a-zA-Z0-9_\.]+\/?$/i;
 
-const facebook =
-  /^(https?:\/\/)?(www\.)?(facebook\.com\/)?(#!\/)?[a-zA-Z0-9._]+\/?$/i;
+const facebook = /^(https?:\/\/)?(www\.)?facebook\.com\/[a-z0-9_\.]+\/?$/i;
 
-const instagram =
-  /^(https?:\/\/)?(www\.)?(instagram\.com\/)?(#!\/)?[a-zA-Z0-9_]+\/?$/i;
+const instagram = /^(https?:\/\/)?(www\.)?instagram\.com\/[a-z0-9_\.]+\/?$/i;
 
 const website = /^(https?:\/\/)?[a-z0-9-]+(\.[a-z0-9-]+)+([/?].*)?$/i;
 
