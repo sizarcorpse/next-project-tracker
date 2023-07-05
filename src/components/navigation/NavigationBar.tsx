@@ -1,6 +1,7 @@
 "use client";
 
 import { GuestMenu, UserMenu } from "@/components/navigation";
+import { ThemeToggle } from "@/components/settings";
 import { User } from "@prisma/client";
 import Link from "next/link";
 import { SiCoffeescript } from "react-icons/si";
@@ -39,7 +40,10 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
       <div className="mx-auto max-w-8xl xl:px-8">
         <nav className="flex items-center justify-between p-4 sm:px-6 lg:px-8 xl:px-0">
           <Logo />
-          {user ? <UserMenu user={user as any} /> : <GuestMenu />}
+          <div className="flex items-center justify-end gap-3">
+            <ThemeToggle />
+            {user ? <UserMenu user={user as any} /> : <GuestMenu />}
+          </div>
         </nav>
       </div>
     </header>
