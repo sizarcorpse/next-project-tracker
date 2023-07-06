@@ -67,7 +67,7 @@ const SignInForm = () => {
             <div className="relative">
               <RiMailOpenLine
                 className={`absolute top-1/2 left-4 transform -translate-y-1/2 ${
-                  errors.email?.message ? "text-rose-700" : "text-slate-400"
+                  errors.email?.message ? "text-destructive" : "text-primary"
                 }`}
               />
               <input
@@ -88,15 +88,15 @@ const SignInForm = () => {
                 })}
                 placeholder="Email"
                 type="email"
-                className={`w-full px-10 py-4 bg-slate-950 border rounded-md outline-none text-sm text-slate-100 font-normal disabled:opacity-70 disabled:cursor-not-allowed placeholder:font-normal ${
+                className={`w-full px-10 py-4 bg-input border rounded-md outline-none text-sm text-primary font-normal disabled:opacity-70 disabled:cursor-not-allowed placeholder:font-normal ${
                   errors.email?.message
-                    ? "border-rose-700"
+                    ? "border-destructive"
                     : "border-transparent"
                 }`}
               />
             </div>
             {errors.email?.message && (
-              <div className="text-rose-700 text-xs mt-3 pl-4">
+              <div className="text-destructive text-xs mt-3 pl-4">
                 {errors.email?.message as string}
               </div>
             )}
@@ -105,7 +105,7 @@ const SignInForm = () => {
             <div className="relative">
               <RiKeyLine
                 className={`absolute top-1/2 left-4 transform -translate-y-1/2 ${
-                  errors.password?.message ? "text-rose-700" : "text-slate-400"
+                  errors.password?.message ? "text-destructive" : "text-primary"
                 }`}
               />
               <input
@@ -126,15 +126,15 @@ const SignInForm = () => {
                 placeholder="Password"
                 autoComplete="current-password"
                 type="password"
-                className={`w-full px-10 py-4 bg-slate-950 border rounded-md outline-none text-sm text-slate-100 font-normal disabled:opacity-70 disabled:cursor-not-allowed placeholder:font-normal ${
+                className={`w-full px-10 py-4 bg-input border rounded-md outline-none text-sm text-primary font-normal disabled:opacity-70 disabled:cursor-not-allowed placeholder:font-normal ${
                   errors.password?.message
-                    ? "border-rose-700"
+                    ? "border-destructive"
                     : "border-transparent"
                 }`}
               />
             </div>
             {errors.password?.message && (
-              <div className="text-rose-700 text-xs mt-3 pl-4">
+              <div className="text-destructive text-xs mt-3 pl-4">
                 {errors.password?.message as string}
               </div>
             )}
@@ -144,7 +144,7 @@ const SignInForm = () => {
               disabled={!isDirty || !isValid || isSubmitting}
               type="submit"
               title="Signup Button"
-              className="w-full py-4 px-8 text-center duration-500 bg-[length:200%_auto] text-light rounded-md font-semibold shadow-md bg-gradient-to-r from-red-500 via-amber-500 to-red-500 cursor-pointer select-none touch-manipulation hover:bg-right-top focus-rose disabled:bg-gradient-to-r disabled:from-zinc-500 disabled:via-slate-500 disabled:to-zinc-500 disabled:cursor-not-allowed disabled:touch-manipulation disabled:hover:bg-right-top"
+              className="w-full py-4 px-8 text-center duration-500 bg-[length:200%_auto] text-primary-foreground rounded-md font-semibold shadow-sm bg-primary cursor-pointer select-none touch-manipulation hover:bg-secondary hover:text-secondary-foreground focus-rose disabled:bg-muted disabled:text-primary disabled:cursor-not-allowed disabled:touch-manipulation"
             >
               Continue
             </button>

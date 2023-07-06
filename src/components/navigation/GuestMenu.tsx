@@ -61,11 +61,11 @@ const NavigationMenu = ({ items }: any) => {
               <Link
                 href={item.href}
                 className={`${
-                  active ? "bg-slate-200 text-slate-600" : "text-slate-100"
-                } flex flex-row items-center gap-2 px-4 py-2 text-sm font-medium rounded-md`}
+                  active ? "bg-primary text-secondary" : "text-primary"
+                } flex flex-row items-center gap-2 px-4 py-2 text-sm font-medium rounded-md hover:text-accent`}
               >
                 <Icon
-                  className={`${active ? "text-amber-400" : "text-slate-400"}`}
+                  className={`${active ? "text-accent" : "text-primary"}`}
                   size="1.25rem"
                 />
                 <span>{item.label}</span>
@@ -79,14 +79,15 @@ const NavigationMenu = ({ items }: any) => {
 };
 
 const Divider = () => {
-  return <div className="border-t border-slate-700 my-2" />;
+  return <div className="border-t border-border my-2" />;
 };
 
 const GuestMenu = () => {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <Menu.Button
-        className={`w-full py-3 px-8 text-center duration-500 bg-[length:200%_auto] text-sm text-slate-100 rounded-md font-normal shadow-sm bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 cursor-pointer select-none touch-manipulation hover:bg-right-top focus-rose`}
+        className={`w-full py-3 px-8 text-center duration-500 bg-[length:200%_auto] text-sm text-primary-foreground rounded-md font-normal shadow-sm bg-gradient-to-r from-primary via-secondary-foreground to-primary cursor-pointer select-none touch-manipulation hover:bg-right-top focus-ring`}
+        // className={`w-full py-3 px-8 text-center duration-500 bg-[length:200%_auto] text-sm text-slate-100 rounded-md font-normal shadow-sm bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 cursor-pointer select-none touch-manipulation hover:bg-right-top focus-rose`}
       >
         Explore Now
         <RiArrowDownSLine className="inline-block ml-2" size="1.25rem" />
@@ -100,7 +101,7 @@ const GuestMenu = () => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 mt-2 w-72 origin-top-right rounded-md bg-slate-800 shadow-sm ">
+        <Menu.Items className="absolute right-0 mt-2 w-72 origin-top-right rounded-md bg-popover shadow-sm border border-border">
           <div className="p-2">
             <NavigationMenu items={MENU_PRIMARY} />
             <Divider />
