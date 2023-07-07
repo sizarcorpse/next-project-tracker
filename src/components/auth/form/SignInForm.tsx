@@ -144,7 +144,7 @@ const SignInForm = () => {
               disabled={!isDirty || !isValid || isSubmitting}
               type="submit"
               title="Signup Button"
-              className="w-full py-4 px-8 text-center duration-500 bg-[length:200%_auto] text-primary-foreground rounded-md font-semibold shadow-sm bg-primary cursor-pointer select-none touch-manipulation hover:bg-secondary hover:text-secondary-foreground focus-rose disabled:bg-muted disabled:text-primary disabled:cursor-not-allowed disabled:touch-manipulation"
+              className="w-full py-4 px-8 text-center duration-500 bg-[length:200%_auto] text-primary-foreground rounded-md font-semibold shadow-sm bg-primary cursor-pointer select-none touch-manipulation hover:bg-accent hover:text-accent-foreground focus-ring disabled:bg-secondary disabled:text-secondary-foreground disabled:cursor-not-allowed disabled:touch-manipulation"
             >
               Continue
             </button>

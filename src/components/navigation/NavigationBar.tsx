@@ -36,7 +36,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
   user: any;
 }) => {
   return (
-    <header className="sticky top-0 z-30 bg-background border-b border-border bg-opacity-50 backdrop-blur backdrop-filter firefox:bg-opacity-90">
+    <header className="sticky top-0 z-30 bg-popover border-b border-border bg-opacity-50 backdrop-blur backdrop-filter firefox:bg-opacity-90">
       <div className="mx-auto max-w-8xl xl:px-8">
         <nav className="flex items-center justify-between px-4 py-2 sm:px-6 lg:px-8 xl:px-0">
           <Logo />
