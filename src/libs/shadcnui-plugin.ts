@@ -2,6 +2,7 @@ import plugin from "tailwindcss/plugin";
 // #f8fafc slate-50   hsl(210, 40%, 98%)
 // #f1f5f9 slate-100  hsl(210, 40%, 96%)
 // #e2e8f0 slate-200  hsl(214, 32%, 91%)
+// #cbd5e1 slate-300  hsl(220, 13%, 91%)
 // #1e293b slate-800  hsl(216, 32%, 17%)
 // #0f172a slate-900  hsl(222, 47%, 11%)
 // #020617 slate-950  hsl(222.2 84% 4.9%)
@@ -13,6 +14,8 @@ import plugin from "tailwindcss/plugin";
 // #e11d48 rose-600   hsl(0 84.2% 60.2%)
 // #0891b2 teal-600   hsl(192, 91%, 36%)
 // #1f2937 gray-800   hsl(217.2 32.6% 17.5%)
+// #94a3b8 slate-400  hsl(215.4 16.3% 46.9%)
+// #334155 slate-600  hsl(215 20.2% 65.1%)
 
 export const shadcnPlugin = plugin(
   function ({ addBase }) {
@@ -21,8 +24,8 @@ export const shadcnPlugin = plugin(
         "--background": "210, 40%, 98%",
         "--foreground": "216, 32%, 17%",
 
-        "--muted": "210 40% 96.1%",
-        "--muted-foreground": "215.4 16.3% 46.9%",
+        "--muted": "220, 13%, 91%",
+        "--muted-foreground": "216, 32%, 17%",
 
         "--popover": "220, 14%, 96%",
         "--popover-foreground": "216, 32%, 17%",
@@ -54,7 +57,7 @@ export const shadcnPlugin = plugin(
         "--foreground": "214, 32%, 91%",
 
         "--muted": "217.2 32.6% 17.5%",
-        "--muted-foreground": "215 20.2% 65.1%",
+        "--muted-foreground": "214, 32%, 91%",
 
         "--popover": "221, 39%, 11%",
         "--popover-foreground": "214, 32%, 91%",
@@ -74,8 +77,8 @@ export const shadcnPlugin = plugin(
         "--accent": "217.2 32.6% 17.5%",
         "--accent-foreground": "214, 32%, 91%",
 
-        "--destructive": "0 62.8% 30.6%",
-        "--destructive-foreground": "0 85.7% 97.3%",
+        "--destructive": "0 84.2% 60.2%",
+        "--destructive-foreground": "214, 32%, 91%",
 
         "--ring": "217.2 32.6% 17.5%",
       },
