@@ -67,11 +67,15 @@ const NavigationMenu = ({ items }: any) => {
               <Link
                 href={item.href}
                 className={`${
-                  active ? "bg-slate-200 text-slate-600" : "text-slate-100"
+                  active
+                    ? "bg-primary text-secondary"
+                    : "text-popover-foreground"
                 } flex flex-row items-center gap-2 px-4 py-2 text-sm font-medium rounded-md`}
               >
                 <Icon
-                  className={`${active ? "text-amber-400" : "text-slate-400"}`}
+                  className={`${
+                    active ? "text-accent" : "text-popover-foreground"
+                  }`}
                   size="1.25rem"
                 />
                 <span>{item.label}</span>
@@ -98,8 +102,10 @@ const ProfileMiniCard = ({ user }: any) => {
         />
       </div>
       <div className="basis-44">
-        <h3 className="text-base font-medium text-slate-100">{name}</h3>
-        <p className="text-sm font-medium text-slate-100">{email}</p>
+        <h3 className="text-base font-medium text-popover-foreground">
+          {name}
+        </h3>
+        <p className="text-sm font-medium text-popover-foreground">{email}</p>
       </div>
     </article>
   );
@@ -112,7 +118,7 @@ const SingOutBox = () => {
         type="button"
         title="Sign out"
         onClick={() => signOut()}
-        className="text-sm text-slate-100 text-center flex flex-row items-center justify-between rounded-md cursor-pointer px-4 py-2 gap-4 bg-slate-950 w-full hover:bg-rose-600"
+        className="text-sm text-popover-foreground text-center flex flex-row items-center justify-between rounded-md cursor-pointer px-4 py-2 gap-4 bg-background w-full hover:bg-destructive"
       >
         Sign me out
         <RiLogoutCircleRLine size="1rem" />
@@ -122,7 +128,7 @@ const SingOutBox = () => {
 };
 
 const Divider = () => {
-  return <div className="border-t border-slate-700 my-2" />;
+  return <div className="border-t border-border my-2" />;
 };
 
 const UserMenu = ({ user }: any) => {
@@ -147,7 +153,7 @@ const UserMenu = ({ user }: any) => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 mt-2 w-72 origin-top-right rounded-md bg-slate-800 shadow-dropdown-shadow ">
+        <Menu.Items className="absolute right-0 mt-2 w-72 origin-top-right rounded-md bg-popover shadow-dropdown-shadow border border-border">
           <div className="p-2">
             <Menu.Item>
               <div className="group flex flex-row rounded-md cursor-pointer p-2 gap-4 transition-colors duration-200 hover:bg-light">

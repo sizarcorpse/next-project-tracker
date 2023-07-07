@@ -6,12 +6,12 @@ const UpdateProfileButton: React.FC = () => {
   return (
     <Link
       href="/u/profile-settings"
-      className="group flex flex-row items-center justify-center gap-2 bg-slate-200 text-slate-800 px-3 py-2 rounded-xl text-xs font-semibold"
+      className="group w-full flex flex-row items-center justify-between gap-2 bg-primary text-primary-foreground px-3 py-2 rounded-xl text-xs font-semibold"
     >
       <span>Update Profile</span>
       <RiEditLine
         size="1rem"
-        className="group-hover:text-amber-500 transition-colors"
+        className="group-hover:text-accent transition-colors"
       />
     </Link>
   );

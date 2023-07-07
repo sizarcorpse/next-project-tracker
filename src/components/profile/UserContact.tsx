@@ -24,7 +24,7 @@ const UserContact: React.FC<UserContactProps> = ({
   website,
   contact,
 }) => {
-  const cls = `flex flex-row items-center justify-start gap-2 text-sm text-slate-800`;
+  const cls = `flex flex-row items-center justify-start gap-2 text-sm text-card-foreground`;
   return designation || company || location || website || contact ? (
     <div className="flex flex-col items-start justify-start gap-2">
       {company && (
@@ -47,7 +47,7 @@ const UserContact: React.FC<UserContactProps> = ({
       )}
       {contact && (
         <Link
-          className={`${cls} hover:underline hover:text-rose-500 transition-all`}
+          className={`${cls} hover:underline hover:text-accent-foreground transition-all`}
           href={`mailto:${contact}`}
         >
           <RiMailOpenLine size="1rem" />
@@ -58,7 +58,7 @@ const UserContact: React.FC<UserContactProps> = ({
         <Link
           href={website}
           target="_blank"
-          className={`${cls} hover:underline hover:text-rose-500 transition-all`}
+          className={`${cls} hover:underline hover:text-accent-foreground transition-all`}
         >
           <RiLinksLine size="1rem" />
           <span>{website}</span>

@@ -19,7 +19,7 @@ const MENU_PRIMARY = [
 ];
 
 const Divider = () => {
-  return <div className="border-t border-slate-200 w-full my-2" />;
+  return <div className="border-t border-border w-full my-2" />;
 };
 
 const SettingsMenu = ({ image }: { image: string }) => {
@@ -37,7 +37,7 @@ const SettingsMenu = ({ image }: { image: string }) => {
           height={36}
           className="rounded-full object-cover"
         />
-        <p className="text-bae text-slate-800 font-bold">Settings</p>
+        <p className="text-bae text-card-foreground font-bold">Settings</p>
       </div>
 
       <Divider />
@@ -53,7 +53,9 @@ const SettingsMenu = ({ image }: { image: string }) => {
               className="flex flex-row items-center gap-2 px-1 p-2 text-sm font-medium rounded-md"
             >
               <Icon
-                className={`${isActive ? "text-amber-500" : "text-slate-400 "}`}
+                className={`${
+                  isActive ? "text-card-foreground" : "text-card-muted"
+                }`}
                 size="1.25rem"
               />
               <span className="hidden md:block">{item.label}</span>

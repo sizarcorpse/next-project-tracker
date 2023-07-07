@@ -36,7 +36,7 @@ interface BioProps {
 
 const RoleChip: React.FC<{ role: string }> = ({ role }) => {
   return (
-    <span className="bg-slate-200 text-slate-800 px-3 py-1 rounded-xl text-xs font-semibold">
+    <span className="bg-primary text-primary-foreground px-3 py-1 rounded-xl text-xs font-semibold">
       {role.charAt(0).toUpperCase() + role.slice(1)}
     </span>
   );
@@ -55,7 +55,7 @@ const UserGender: React.FC<UserGenderProps> = ({ gender }) => {
 const UserBio: React.FC<BioProps> = ({ bio }) => {
   return (
     <div className="flex flex-col gap-2">
-      <p className="text-sm text-slate-800 text-left">{bio}</p>
+      <p className="text-sm text-card-foreground text-left">{bio}</p>
     </div>
   );
 };
@@ -73,14 +73,18 @@ const UserContext: React.FC<UserContextProps> = ({
       <ProfilePhoto image={image} />
       <h1 className="flex flex-col gap-1">
         <div className="flex items-center justify-start gap-2">
-          <span className="text-base sm:text-xl font-semibold text-slate-800 inline-flex gap-1">
+          <span className="text-base sm:text-xl font-semibold text-card-foreground inline-flex gap-1">
             {name} {gender ? <UserGender gender={gender} /> : null}
           </span>
 
           {role && <RoleChip role={role} />}
         </div>
-        <span className="text-sm font-medium text-slate-700">@{username}</span>
-        <span className="text-sm font-medium text-slate-700">{email}</span>
+        <span className="text-sm font-medium text-card-foreground">
+          @{username}
+        </span>
+        <span className="text-sm font-medium text-card-foreground">
+          {email}
+        </span>
       </h1>
     </div>
   );
