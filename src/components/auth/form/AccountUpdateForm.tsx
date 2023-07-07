@@ -17,8 +17,8 @@ import useSWR from "swr";
 const inputFieldStyles = (errors: any, field: any, isIcon?: boolean) => {
   return `w-full ${
     isIcon ? "pl-10 py-4 pr-4" : "p-4"
-  }  bg-slate-200 border rounded-md outline-none text-sm text-slate-800 font-normal disabled:opacity-70 disabled:cursor-not-allowed placeholder:font-normal placeholder:text-slate-400 ${
-    errors[field]?.message ? "border-rose-700" : "border-transparent"
+  }  bg-input border rounded-md outline-none text-sm text-card-foreground font-normal disabled:opacity-70 disabled:cursor-not-allowed placeholder:font-normal placeholder:text-card-foreground/50 ${
+    errors[field]?.message ? "border-destructive" : "border-transparent"
   }`;
 };
 
@@ -258,14 +258,14 @@ const AccountUpdateForm = () => {
                 disabled={isLoading || !isDirty || !isValid}
                 type="submit"
                 title="Signup Button"
-                className="w-full py-4 px-8 text-center duration-500 bg-[length:200%_auto] text-light rounded-md font-semibold shadow-md bg-gradient-to-r from-red-500 via-amber-500 to-red-500 cursor-pointer select-none touch-manipulation hover:bg-right-top focus-rose disabled:bg-gradient-to-r disabled:from-zinc-500 disabled:via-slate-500 disabled:to-zinc-500 disabled:cursor-not-allowed disabled:touch-manipulation disabled:hover:bg-right-top"
+                className="w-full py-4 px-8 text-center duration-500 bg-[length:200%_auto] text-primary-foreground rounded-md font-semibold shadow-sm bg-primary cursor-pointer select-none touch-manipulation hover:bg-accent hover:text-accent-foreground focus-ring disabled:bg-secondary disabled:text-secondary-foreground disabled:cursor-not-allowed disabled:touch-manipulation"
               >
                 Update Account Setting
               </button>
             </div>
             <Link
               href="/u/profile"
-              className="text-sm text-amber-500 font-semibold hover:text-rose-500"
+              className="text-sm text-destructive font-semibold hover:underline"
             >
               Cancel Account Setting
             </Link>

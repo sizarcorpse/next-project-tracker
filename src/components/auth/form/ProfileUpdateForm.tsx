@@ -1,4 +1,5 @@
 "use client";
+
 import { Listbox } from "@headlessui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -20,6 +21,12 @@ import {
   RiUserVoiceLine,
 } from "react-icons/ri";
 import useSWR from "swr";
+
+import {
+  FormControl,
+  FormDataFetchError,
+  FormGroup,
+} from "@/components/auth/form/ui";
 
 const GENDER_DATA = [
   {
@@ -44,111 +51,12 @@ const GENDER_DATA = [
   },
 ];
 
-const FormGroup = ({
-  children,
-  icon,
-  title,
-  subtitle,
-}: {
-  children: React.ReactNode;
-  title: string;
-  icon?: IconType;
-  subtitle?: string;
-}) => {
-  const Icon = icon || RiInformationLine;
-  return (
-    <div className="flex flex-col gap-3">
-      <div>
-        <div className="flex flex-row items-center justify-start gap-2">
-          <Icon className="text-slate-600" />
-          <h4 className="text-sm font-semibold text-slate-600">{title}</h4>
-        </div>
-        {subtitle && (
-          <span className="text-xs font-normal text-slate-500">{subtitle}</span>
-        )}
-      </div>
-      {children}
-    </div>
-  );
-};
-
-const FormControl = ({
-  children,
-  id,
-  errors,
-  icon,
-  dirtyFields,
-}: {
-  children: React.ReactNode;
-  errors?: any;
-  id: string;
-  icon?: any;
-  dirtyFields?: any;
-}) => {
-  const Icon = icon || undefined;
-  return (
-    <div className="w-full">
-      <div className="relative">
-        {Icon ? (
-          <Icon
-            className={`absolute top-1/2 left-4 transform -translate-y-1/2  ${
-              dirtyFields && dirtyFields[id]
-                ? "text-slate-800"
-                : "text-slate-600"
-            }`}
-          />
-        ) : (
-          ""
-        )}
-        {children}
-      </div>
-      {errors && errors[id]?.message && (
-        <div className="text-rose-700 text-xs mt-3 pl-4">
-          {errors && (errors[id]?.message as string)}
-        </div>
-      )}
-    </div>
-  );
-};
-
 const inputFieldStyles = (errors: any, field: any, isIcon?: boolean) => {
   return `w-full ${
     isIcon ? "pl-10 py-4 pr-4" : "p-4"
-  }  bg-slate-200 border rounded-md outline-none text-sm text-slate-800 font-normal disabled:opacity-70 disabled:cursor-not-allowed placeholder:font-normal placeholder:text-slate-400 ${
-    errors[field]?.message ? "border-rose-700" : "border-transparent"
+  }  bg-input border rounded-md outline-none text-sm text-card-foreground font-normal disabled:opacity-70 disabled:cursor-not-allowed placeholder:font-normal placeholder:text-card-foreground/50 ${
+    errors[field]?.message ? "border-destructive" : "border-transparent"
   }`;
-};
-
-const ProfileFetchError = () => {
-  const router = useRouter();
-
-  return (
-    <div className="w-full flex flex-col items-center justify-center p-4 rounded-md gap-8 bg-slate-200 sm:p-6 md:p-12 md:gap-12">
-      <div className="flex flex-col items-center justify-center gap-2">
-        <h2 className="text-xl font-semibold text-center text-slate-800">
-          Something went wrong
-        </h2>
-        <p className="text-sm text-center text-slate-800">
-          We are unable to fetch your profile. Please try again after sometime.
-        </p>
-      </div>
-      <div className="flex flex-row items-center justify-center gap-4">
-        <button
-          title="Retry"
-          className="bg-slate-100 text-slate-800 text-sm font-semibold px-6 py-2 rounded-md hover:bg-amber-400 transition-colors"
-          onClick={() => router.refresh()}
-        >
-          Retry
-        </button>
-        <button
-          className="bg-slate-100 text-slate-800 text-sm font-semibold px-6 py-2 rounded-md hover:bg-emerald-400 transition-colors"
-          onClick={() => router.back()}
-        >
-          Go Back
-        </button>
-      </div>
-    </div>
-  );
 };
 
 const ProfileUpdateForm = () => {
@@ -218,7 +126,7 @@ const ProfileUpdateForm = () => {
   };
 
   if (error) {
-    return <ProfileFetchError />;
+    return <FormDataFetchError />;
   }
 
   return (
@@ -324,24 +232,24 @@ const ProfileUpdateForm = () => {
               }}
             >
               <div className="relative mt-1">
-                <Listbox.Button className="w-full p-4 text-start bg-slate-200 border rounded-md outline-none text-sm text-slate-400 font-normal">
+                <Listbox.Button className="w-full p-4 text-start bg-input border rounded-md outline-none text-sm text-card-foreground font-normal">
                   <span
                     className={`${
                       selectedGender.id === 0
-                        ? "text-slate-400"
-                        : "text-slate-800"
+                        ? "text-card-foreground"
+                        : "text-card-foreground"
                     }`}
                   >
                     {selectedGender.title}
                   </span>
                   <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                     <RiArrowDownSLine
-                      className="h-5 w-5 text-gray-400"
+                      className="h-5 w-5 text-card-foreground"
                       aria-hidden="true"
                     />
                   </span>
                 </Listbox.Button>
-                <Listbox.Options className="absolute mt-2 p-2 max-h-60 w-full overflow-auto rounded-md bg-white text-sm shadow-lg z-10 sm:text-sm">
+                <Listbox.Options className="absolute mt-2 p-2 max-h-60 w-full overflow-auto rounded-md bg-card text-sm shadow-lg z-10 sm:text-sm">
                   {GENDER_DATA.map((gender) => (
                     <Listbox.Option
                       key={gender.id}
@@ -349,8 +257,8 @@ const ProfileUpdateForm = () => {
                       className={({ active }) =>
                         `relative select-none px-3 py-2 rounded-sm cursor-pointer ${
                           active
-                            ? "bg-amber-400 text-slate-800"
-                            : "text-slate-800"
+                            ? "bg-accent text-card-foreground"
+                            : "text-card-foreground"
                         }`
                       }
                     >
@@ -502,14 +410,14 @@ const ProfileUpdateForm = () => {
                 disabled={isLoading || !isDirty || !isValid}
                 type="submit"
                 title="Signup Button"
-                className="w-full py-4 px-8 text-center duration-500 bg-[length:200%_auto] text-light rounded-md font-semibold shadow-md bg-gradient-to-r from-red-500 via-amber-500 to-red-500 cursor-pointer select-none touch-manipulation hover:bg-right-top focus-rose disabled:bg-gradient-to-r disabled:from-zinc-500 disabled:via-slate-500 disabled:to-zinc-500 disabled:cursor-not-allowed disabled:touch-manipulation disabled:hover:bg-right-top"
+                className="w-full py-4 px-8 text-center duration-500 bg-[length:200%_auto] text-primary-foreground rounded-md font-semibold shadow-sm bg-primary cursor-pointer select-none touch-manipulation hover:bg-accent hover:text-accent-foreground focus-ring disabled:bg-secondary disabled:text-secondary-foreground disabled:cursor-not-allowed disabled:touch-manipulation"
               >
                 Update Profile
               </button>
             </div>
             <Link
               href="/u/profile"
-              className="text-sm text-amber-500 font-semibold hover:text-rose-500"
+              className="text-sm text-destructive font-semibold hover:underline"
             >
               Cancel Updating Profile Info
             </Link>

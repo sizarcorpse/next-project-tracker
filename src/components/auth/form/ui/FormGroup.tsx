@@ -16,11 +16,15 @@ const FormGroup = ({
     <div className="flex flex-col gap-3">
       <div>
         <div className="flex flex-row items-center justify-start gap-2">
-          <Icon className="text-slate-600" />
-          <h4 className="text-sm font-semibold text-slate-600">{title}</h4>
+          <Icon className="text-primary" />
+          <h4 className="text-sm font-semibold text-card-foreground">
+            {title}
+          </h4>
         </div>
         {subtitle && (
-          <span className="text-xs font-normal text-slate-500">{subtitle}</span>
+          <span className="text-xs font-normal text-card-foreground/50">
+            {subtitle}
+          </span>
         )}
       </div>
       {children}

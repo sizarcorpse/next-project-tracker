@@ -19,8 +19,8 @@ const FormControl = ({
           <Icon
             className={`absolute top-1/2 left-4 transform -translate-y-1/2  ${
               dirtyFields && dirtyFields[id]
-                ? "text-slate-800"
-                : "text-slate-600"
+                ? "text-card-foreground"
+                : "text-card-foreground/60"
             }`}
           />
         ) : (
@@ -29,7 +29,7 @@ const FormControl = ({
         {children}
       </div>
       {errors && errors[id]?.message && (
-        <div className="text-rose-700 text-xs mt-3 pl-4">
+        <div className="text-destructive text-xs mt-3 pl-4">
           {errors && (errors[id]?.message as string)}
         </div>
       )}
