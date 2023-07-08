@@ -11,23 +11,24 @@ datasource db {
 }
 
 model User {
-  id             String    @id @default(uuid())
-  name           String?
-  username       String?   @unique
-  role           String    @default("user")
-  email          String?   @unique
-  emailVerified  DateTime?
-  image          String?
-  password       String?
-  profile        Profile?
-  accounts       Account[]
-  sessions       Session[]
-  projects       Project[]
-  createdTasks   Task[]    @relation("CreatedTasks")
-  assignedTasks  Task[]    @relation("AssignedTasks")
-  completedTasks Task[]    @relation("CompletedTasks")
-  inProgressBy   Task[]    @relation("InProgressTasks")
-  comments       Comment[]
+  id                  String       @id @default(uuid())
+  name                String?
+  username            String?      @unique
+  role                String       @default("user")
+  email               String?      @unique
+  emailVerified       DateTime?
+  image               String?
+  password            String?
+  profile             Profile?
+  accounts            Account[]
+  sessions            Session[]
+  projects            Project[]
+  createdTasks        Task[]       @relation("CreatedTasks")
+  assignedTasks       Task[]       @relation("AssignedTasks")
+  completedTasks      Task[]       @relation("CompletedTasks")
+  inProgressBy        Task[]       @relation("InProgressTasks")
+  createdTechnologies Technology[] @relation("CreatedTechnologies")
+  comments            Comment[]
 }
 
 model Profile {
@@ -215,10 +216,15 @@ model Tag {
 }
 
 model Technology {
-  id       Int       @id @default(autoincrement())
-  name     String    @unique
-  icon     String?
-  projects Project[] @relation("ProjectTechnologies")
+  id              String    @id @default(uuid())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  createdBy       User      @relation("CreatedTechnologies", fields: [createdByUserId], references: [id])
+  createdByUserId String
+  name            String    @unique
+  slug            String    @unique
+  icon            String?
+  projects        Project[] @relation("ProjectTechnologies")
 
   @@index([name])
 }
