@@ -11,17 +11,23 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(uuid())
-  name          String?
-  username      String?   @unique
-  role          String    @default("user")
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  password      String?
-  profile       Profile?
-  accounts      Account[]
-  sessions      Session[]
+  id             String    @id @default(uuid())
+  name           String?
+  username       String?   @unique
+  role           String    @default("user")
+  email          String?   @unique
+  emailVerified  DateTime?
+  image          String?
+  password       String?
+  profile        Profile?
+  accounts       Account[]
+  sessions       Session[]
+  projects       Project[]
+  createdTasks   Task[]    @relation("CreatedTasks")
+  assignedTasks  Task[]    @relation("AssignedTasks")
+  completedTasks Task[]    @relation("CompletedTasks")
+  inProgressBy   Task[]    @relation("InProgressTasks")
+  comments       Comment[]
 }
 
 model Profile {
@@ -67,4 +73,163 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum ProjectStatus {
+  ACTIVE
+  INACTIVE
+  ARCHIVED
+}
+
+enum ProjectPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum ProjectVisibility {
+  PUBLIC
+  PRIVATE
+}
+
+enum ProjectType {
+  WEB
+  APP
+  GAME
+  DESKTOP
+  API
+  LIBRARY
+  DATA
+  HARDWARE
+  OTHER
+}
+
+model Project {
+  id              String            @id @default(uuid())
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  createdBy       User              @relation(fields: [createdByUserId], references: [id], onDelete: Cascade)
+  createdByUserId String
+  coverImage      String?           @default("")
+  title           String            @default("Untitled Project")
+  slug            String            @unique() @default(uuid())
+  description     String?           @default("No description provided")
+  content         Json?
+  type            ProjectType       @default(OTHER)
+  visibility      ProjectVisibility @default(PUBLIC)
+  status          ProjectStatus     @default(ACTIVE)
+  priority        ProjectPriority   @default(MEDIUM)
+  startDate       DateTime?         @default(now())
+  endDate         DateTime?
+  figmaLink       String?           @default("")
+  githubLink      String?           @default("")
+  liveLink        String?           @default("")
+  devLink         String?           @default("")
+  technologies    Technology[]      @relation("ProjectTechnologies")
+  tasks           Task[]
+  comments        Comment[]
+  tags            Tag[]             @relation("ProjectTags")
+  client          Client?           @relation("ClientProjects", fields: [clientId], references: [id])
+  clientId        String?
+
+  @@index([status])
+  @@index([priority])
+  @@index([startDate])
+  @@index([endDate])
+}
+
+enum TaskStatus {
+  ACTIVE
+  COMPLETED
+  CANCELED
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+model Task {
+  id                 String       @id @default(uuid())
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+  createdBy          User         @relation("CreatedTasks", fields: [createdByUserId], references: [id], onDelete: Cascade)
+  createdByUserId    String
+  title              String
+  slug               String       @unique() @default(uuid())
+  description        String?
+  content            Json?
+  status             TaskStatus   @default(ACTIVE)
+  priority           TaskPriority @default(MEDIUM)
+  startDate          DateTime?    @default(now())
+  endDate            DateTime?
+  completedDate      DateTime?
+  completedBy        User?        @relation("CompletedTasks", fields: [completedByUserId], references: [id], onDelete: SetNull)
+  completedByUserId  String?
+  assignedTo         User?        @relation("AssignedTasks", fields: [assignedToUserId], references: [id], onDelete: SetNull)
+  assignedToUserId   String?
+  inProgressBy       User?        @relation("InProgressTasks", fields: [inProgressByUserId], references: [id], onDelete: SetNull)
+  inProgressByUserId String?
+  isPined            Boolean      @default(false)
+  project            Project      @relation(fields: [projectId], references: [id])
+  projectId          String
+  comments           Comment[]
+  tags               Tag[]        @relation("TaskTags")
+
+  @@index([status])
+  @@index([priority])
+  @@index([projectId])
+}
+
+model Comment {
+  id          String    @id @default(uuid())
+  content     String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  createdBy   User      @relation(fields: [createdById], references: [id])
+  createdById String
+  task        Task?     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  taskId      String?
+  project     Project?  @relation(fields: [projectId], references: [id])
+  projectId   String?
+  replyToId   String
+  replyTo     Comment?  @relation("ReplyTo", fields: [replyToId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  replies     Comment[] @relation("ReplyTo")
+  editedAt    DateTime?
+
+  @@index([createdById])
+  @@index([taskId])
+  @@index([projectId])
+}
+
+model Tag {
+  id       String    @id @default(uuid())
+  name     String
+  color    String?
+  icon     String?
+  projects Project[] @relation("ProjectTags")
+  tasks    Task[]    @relation("TaskTags")
+
+  @@index([name])
+}
+
+model Technology {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  icon     String?
+  projects Project[] @relation("ProjectTechnologies")
+
+  @@index([name])
+}
+
+model Client {
+  id       String    @id @default(uuid())
+  name     String
+  email    String    @unique
+  phone    String?
+  source   String?
+  projects Project[] @relation("ClientProjects")
+
+  @@index([name])
 }
