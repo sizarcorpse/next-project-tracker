@@ -1,6 +1,6 @@
 "use client";
 
-import { Svg } from "@/components/global";
+import { Svg } from "@/components/common";
 import {
   Card,
   CardContent,
