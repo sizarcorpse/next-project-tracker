@@ -30,3 +30,46 @@ export async function GET(req: NextRequest) {
     return createResponse("error", "Technology not found", null, 500);
   }
 }
+
+export async function POST(req: NextRequest) {
+  try {
+    console.log("✅ POST: /api/technologies");
+
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return createResponse("error", "Unauthorized", null, 401);
+    }
+
+    const body = await req.json();
+    const { name, icon } = body;
+    const slug = name.toLowerCase().replace(" ", "-");
+    const iconUrl = `https://simpleicons.org/icons/${icon}.svg`;
+
+    const existingTechnology = await prisma.technology.findFirst({
+      where: {
+        OR: [{ name: name }, { slug: slug }],
+      },
+    });
+
+    if (existingTechnology) {
+      return createResponse("error", "Technology already exists", null, 409);
+    }
+
+    const technology = await prisma.technology.create({
+      data: {
+        name,
+        slug,
+        icon: iconUrl,
+        createdBy: {
+          connect: {
+            id: session?.user?.id,
+          },
+        },
+      },
+    });
+
+    return createResponse("ok", null, technology, 201);
+  } catch (error: any) {
+    return createResponse("error", "Technology create failed", null, 500);
+  }
+}
