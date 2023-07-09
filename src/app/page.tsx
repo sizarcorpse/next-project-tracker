@@ -1,48 +1,16 @@
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-
-const about = {
-  packages: [
-    "NextJS",
-    "NextAuth",
-    "TailwindCSS",
-    "TypeScript",
-    "Prisma",
-    "PostgreSQL",
-    "React Hook Form",
-    "React-hot-toast",
-    "Swr",
-    "React-icons",
-    "Zod",
-  ],
-};
+import { TechnologiesOverview } from "@/components/technologies";
 
 const Home = async () => {
-  const { packages } = about;
   return (
-    <main className="flex flex-col gap-6 items-center justify-center p-6">
-      <div className="container max-w-screen-lg mx-auto">
-        <div className="flex flex-col gap-4 items-center justify-center">
-          <h1 className="text-xl font-bold text-primary uppercase md:text-4xl lg:text-6xl text-center animate-in fade-in zoom-in">
-            Next Auth Boilerplate
-          </h1>
-          <div className="flex flex-row items-center justify-center flex-wrap gap-2">
-            {packages.map((item, index) => (
-              <p
-                key={index}
-                className="px-2 py-1 rounded-lg border border-border text-sm text-primary font-semibold cursor-pointer hover:bg-primary hover:text-background transition-all duration-300 ease-in-out"
-              >
-                {item}
-              </p>
-            ))}
+    <main className="flex flex-col gap-6 items-center justify-center">
+      <div className="container max-w-screen-2xl mx-auto p-6 min-h-[calc(100vh-52px-16px)] grid grid-cols-12 gap-4">
+        <div className="col-span-8 rounded-md h-full bg-muted">?</div>
+        <div className="col-span-4 grid grid-cols-1 grid-rows-12 gap-4 ">
+          <div className="bg-muted rounded-md row-span-2">Members</div>
+          <div className="row-span-5">
+            <TechnologiesOverview />
           </div>
+          <div className="bg-muted rounded-md row-span-5">Tag</div>
         </div>
       </div>
     </main>
