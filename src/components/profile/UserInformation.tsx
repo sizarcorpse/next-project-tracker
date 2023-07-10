@@ -5,9 +5,11 @@ import {
   ProfilePhoto,
   UpdateProfileButton,
   UserContact,
+  UserGender,
+  UserRoleBadge,
   UserSocials,
 } from "@/components/profile/";
-import { RiGenderlessLine, RiMenLine, RiWomenLine } from "react-icons/ri";
+
 import useSwr from "swr";
 
 interface UserInformationProps {
@@ -27,30 +29,10 @@ interface UserContextProps {
   email?: string | null;
   gender?: string | null;
 }
-interface UserGenderProps {
-  gender: "Male" | "Female" | "Other" | null;
-}
+
 interface BioProps {
   bio: string;
 }
-
-const RoleChip: React.FC<{ role: string }> = ({ role }) => {
-  return (
-    <span className="bg-primary text-primary-foreground px-3 py-1 rounded-xl text-xs font-semibold">
-      {role.charAt(0).toUpperCase() + role.slice(1)}
-    </span>
-  );
-};
-
-const UserGender: React.FC<UserGenderProps> = ({ gender }) => {
-  return (
-    <div className="flex flex-row items-center justify-start gap-2">
-      {gender === "Male" && <RiMenLine size="1rem" />}
-      {gender === "Female" && <RiWomenLine size="1rem" />}
-      {gender === "Other" && <RiGenderlessLine size="1rem" />}
-    </div>
-  );
-};
 
 const UserBio: React.FC<BioProps> = ({ bio }) => {
   return (
@@ -77,7 +59,7 @@ const UserContext: React.FC<UserContextProps> = ({
             {name} {gender ? <UserGender gender={gender} /> : null}
           </span>
 
-          {role && <RoleChip role={role} />}
+          {role && <UserRoleBadge role={role} />}
         </div>
         <span className="text-sm font-medium text-card-foreground">
           @{username}
