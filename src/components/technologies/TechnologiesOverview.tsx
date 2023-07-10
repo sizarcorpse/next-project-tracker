@@ -28,7 +28,7 @@ const TechnologiesOverview = () => {
   };
 
   return (
-    <Card className="flex flex-col items-start justify-start gap-6 p-4">
+    <Card className="flex flex-col items-start justify-start gap-6 p-4 h-max">
       <CardHeader className="p-0 w-full">
         <div className="flex flex-row justify-between gap-4">
           <div>

@@ -100,6 +100,7 @@ const CreateTechnologyForm: FC<CreateTechnologyFormProps> = ({
                     placeholder="Name Of the Technology"
                     autoComplete="off"
                     {...field}
+                    className="border-none"
                   />
                 </FormControl>
                 <FormMessage />
@@ -118,6 +119,7 @@ const CreateTechnologyForm: FC<CreateTechnologyFormProps> = ({
                     placeholder="Icon Name"
                     autoComplete="off"
                     {...field}
+                    className="border-none"
                   />
                 </FormControl>
                 <FormDescription>
@@ -125,7 +127,7 @@ const CreateTechnologyForm: FC<CreateTechnologyFormProps> = ({
                   <Link
                     href="https://simpleicons.org/"
                     target="_blank"
-                    className="underline"
+                    className="underline text-accent"
                   >
                     Icons
                   </Link>{" "}
