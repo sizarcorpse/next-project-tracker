@@ -1,54 +1,44 @@
 import plugin from "tailwindcss/plugin";
-// #f8fafc slate-50   hsl(210, 40%, 98%)
-// #f1f5f9 slate-100  hsl(210, 40%, 96%)
-// #e2e8f0 slate-200  hsl(214, 32%, 91%)
-// #cbd5e1 slate-300  hsl(220, 13%, 91%)
-// #1e293b slate-800  hsl(216, 32%, 17%)
-// #0f172a slate-900  hsl(222, 47%, 11%)
-// #020617 slate-950  hsl(222.2 84% 4.9%)
-// #f3f4f6 gray-100   hsl(220, 14%, 96%)
-// #e5e7eb gray-200   hsl(220, 13%, 91%)
-// #e5e7eb gray-300   hsl(214.3 31.8% 91.4%)
-// #374151 gray-700   hsl(217, 19%, 27%)
-// #111827 gray-900   hsl(221, 39%, 11%)
-// #e11d48 rose-600   hsl(0 84.2% 60.2%)
-// #0891b2 teal-600   hsl(192, 91%, 36%)
-// #1f2937 gray-800   hsl(217.2 32.6% 17.5%)
-// #94a3b8 slate-400  hsl(215.4 16.3% 46.9%)
-// #334155 slate-600  hsl(215 20.2% 65.1%)
 
 export const shadcnPlugin = plugin(
   function ({ addBase }) {
     addBase({
       ":root": {
-        "--background": "210, 40%, 98%",
-        "--foreground": "216, 32%, 17%",
+        "--background": "220, 16%, 22%",
+        "--foreground": "219, 28%, 88%",
 
-        "--muted": "220, 13%, 91%",
-        "--muted-foreground": "216, 32%, 17%",
+        "--muted": "222, 16%, 28%",
+        "--muted-foreground": "218, 27%, 92%",
 
-        "--popover": "220, 14%, 96%",
-        "--popover-foreground": "216, 32%, 17%",
+        "--popover": "220, 17%, 32%",
+        "--popover-foreground": "218, 27%, 94%",
 
-        "--card": "210, 40%, 96%",
-        "--card-foreground": "216, 32%, 17%",
+        "--border": "220, 16%, 36%",
+        "--input": "219, 28%, 85%",
 
-        "--border": "214.3 31.8% 91.4%",
-        "--input": "214.3 31.8% 91.4%",
+        "--card": "219, 28%, 88%",
+        "--card-foreground": "220, 16%, 22%",
 
-        "--primary": "222, 47%, 11%",
-        "--primary-foreground": "214, 32%, 91%",
+        "--primary": "240, 50%, 40%",
+        "--primary-foreground": "219, 28%, 88%",
 
-        "--secondary": "220, 13%, 91%",
-        "--secondary-foreground": "216, 32%, 17%",
+        "--secondary": "240, 25%, 80%",
+        "--secondary-foreground": "220, 16%, 22%",
 
-        "--accent": "220, 13%, 91%",
-        "--accent-foreground": "216, 32%, 17%",
+        "--accent": "48, 100%, 49%",
+        "--accent-foreground": "220, 16%, 22%",
 
-        "--destructive": "0 84.2% 60.2%",
-        "--destructive-foreground": "214, 32%, 91%",
+        "--destructive": "348, 100%, 59%",
+        "--destructive-foreground": "220, 16%, 22%",
 
-        "--ring": "192, 91%, 36%",
+        "--success": "120, 100%, 49%",
+        "--success-foreground": "219, 28%, 88%",
+
+        "--warning": "60, 100%, 59%",
+        "--warning-foreground": "220, 16%, 22%",
+
+        "--ring": "240, 50%, 50%",
+
         "--radius": "0.5rem",
       },
 
@@ -120,6 +110,14 @@ export const shadcnPlugin = plugin(
           destructive: {
             DEFAULT: "hsl(var(--destructive))",
             foreground: "hsl(var(--destructive-foreground))",
+          },
+          success: {
+            DEFAULT: "hsl(var(--success))",
+            foreground: "hsl(var(--success-foreground))",
+          },
+          warning: {
+            DEFAULT: "hsl(var(--warning))",
+            foreground: "hsl(var(--warning-foreground))",
           },
           muted: {
             DEFAULT: "hsl(var(--muted))",
