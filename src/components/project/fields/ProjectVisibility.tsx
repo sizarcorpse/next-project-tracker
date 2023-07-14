@@ -115,7 +115,11 @@ const ProjectVisibility = ({ form }: any) => {
             </FormControl>
             <SelectContent className="border-0">
               {projectVisibilities.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
+                <SelectItem
+                  key={item.value}
+                  value={item.value}
+                  className="transition-colors cursor-pointer"
+                >
                   <div className="flex items-center justify-center gap-2 border-0">
                     {item.icon}
                     {item.label}

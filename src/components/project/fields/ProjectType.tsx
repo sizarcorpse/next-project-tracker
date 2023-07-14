@@ -1,4 +1,6 @@
 "use client";
+
+import { Badge } from "@/components/ui/badge";
 import {
   FormControl,
   FormField,
@@ -19,9 +21,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
-import { Badge } from "@/components/ui/badge";
-
 import {
   AppWindow,
   FolderOpenDot,
@@ -143,7 +142,7 @@ const ProjectType = ({ form }: any) => {
       render={({ field }) => (
         <FormItem>
           <FormLabel className="flex items-center justify-between gap-4">
-            <div className="flex items-center justify-start gap-4">
+            <div className="flex items-center justify-start gap-2">
               <FolderOpenDot size={16} />
               <p>Project Type</p>
             </div>
@@ -167,7 +166,7 @@ const ProjectType = ({ form }: any) => {
                 <SelectItem
                   key={item.value}
                   value={item.value}
-                  className="transition-colors  cursor-pointer"
+                  className="transition-colors cursor-pointer"
                 >
                   <div className="flex items-center justify-center gap-2 border-0">
                     {item.icon}

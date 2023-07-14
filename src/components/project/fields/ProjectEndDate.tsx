@@ -26,7 +26,7 @@ const ProjectEndDate = ({ form }: any) => {
       name="endDate"
       render={({ field }) => (
         <FormItem className="flex flex-col">
-          <FormLabel className="flex items-center justify-between gap-4 h-6">
+          <FormLabel className="flex items-center justify-between gap-4 h-[27px]">
             <div className="flex items-center justify-start gap-2">
               <CalendarDays size={16} />
               <p>Project Termination Date</p>
