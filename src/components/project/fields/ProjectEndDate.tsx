@@ -20,6 +20,13 @@ import {
 } from "@/components/ui/popover";
 
 const ProjectEndDate = ({ form }: any) => {
+  const endDate = form.getValues("endDate");
+  const prismaDateTime = endDate;
+  const formattedDate =
+    prismaDateTime != undefined
+      ? format(new Date(prismaDateTime), "MMM d, y")
+      : null;
+
   return (
     <FormField
       control={form.control}
@@ -43,18 +50,14 @@ const ProjectEndDate = ({ form }: any) => {
                   )}
                 >
                   <CalendarDays className="h-4 w-4 opacity-50" />
-                  {field.value ? (
-                    format(field.value, "PPP")
-                  ) : (
-                    <span>Pick a date</span>
-                  )}
+                  {field.value ? formattedDate : <span>Pick a date</span>}
                 </Button>
               </FormControl>
             </PopoverTrigger>
             <PopoverContent className="p-0" align="start">
               <Calendar
                 mode="single"
-                selected={field.value}
+                selected={new Date(field.value)}
                 onSelect={field.onChange}
                 disabled={(date) => date < new Date()}
                 initialFocus
