@@ -57,3 +57,48 @@ export async function GET(req: NextRequest) {
     return createResponse("error", "Technology create failed", null, 500);
   }
 }
+
+export async function POST(req: NextRequest) {
+  try {
+    console.log("✅ POST: /api/projects");
+
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return createResponse("error", "Unauthorized", null, 401);
+    }
+
+    const body = await req.json();
+    const { title, type, priority, visibility, stage } = body;
+    const slug = slugify(title, { lower: true });
+
+    const existingProject = await prisma.project.findFirst({
+      where: {
+        OR: [{ title: title }, { slug: slug }],
+      },
+    });
+
+    if (existingProject) {
+      return createResponse("error", "Project already exists", null, 409);
+    }
+
+    const project = await prisma.project.create({
+      data: {
+        title,
+        slug,
+        type,
+        priority,
+        visibility,
+        stage,
+        createdBy: {
+          connect: {
+            id: session.user.id,
+          },
+        },
+      },
+    });
+
+    return createResponse("success", "Project created", project, 201);
+  } catch (error: any) {
+    return createResponse("error", "Technology create failed", null, 500);
+  }
+}
