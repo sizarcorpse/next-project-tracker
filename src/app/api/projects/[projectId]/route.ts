@@ -3,6 +3,7 @@ import { prisma } from "@/libs/prisma";
 import { createResponse } from "@/utils/";
 import { getServerSession } from "next-auth/next";
 import { NextRequest } from "next/server";
+import slugify from "slugify";
 
 export async function GET(req: NextRequest, { params }: any) {
   try {
@@ -23,5 +24,57 @@ export async function GET(req: NextRequest, { params }: any) {
     return createResponse("ok", null, project, 200);
   } catch (error) {
     return createResponse("error", "Technology create failed", null, 500);
+  }
+}
+
+export async function PATCH(req: NextRequest, { params }: any) {
+  try {
+    console.log("✅ PATCH: /api/projects/:project");
+
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return createResponse("error", "Unauthorized", null, 401);
+    }
+
+    const isProjectExits = await prisma.project.findFirst({
+      where: {
+        id: params.projectId,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    if (!isProjectExits) {
+      return createResponse("error", "Project not found", null, 404);
+    }
+
+    const body = await req.json();
+    const slug = slugify(body.title, { lower: true });
+    body.slug = slug;
+
+    const project = await prisma.project.update({
+      where: {
+        id: params.projectId,
+      },
+      data: {
+        title: body.title,
+        slug: body.slug,
+        description: body.description,
+        type: body.type,
+        priority: body.priority,
+        visibility: body.visibility,
+        stage: body.stage,
+        endDate: body.endDate,
+        figmaLink: body.figmaLink,
+        githubLink: body.githubLink,
+        devLink: body.devLink,
+        liveLink: body.liveLink,
+      },
+    });
+
+    return createResponse("ok", null, project, 200);
+  } catch (error) {
+    return createResponse("error", "Project create failed", null, 500);
   }
 }
