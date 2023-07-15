@@ -80,12 +80,15 @@ enum ProjectStatus {
   ACTIVE
   INACTIVE
   ARCHIVED
+  DRAFT
 }
 
 enum ProjectPriority {
+  LOWEST
   LOW
   MEDIUM
   HIGH
+  HIGHEST
 }
 
 enum ProjectVisibility {
@@ -105,6 +108,16 @@ enum ProjectType {
   OTHER
 }
 
+enum ProjectStage {
+  CONCEPT
+  PLANNING
+  DESIGN
+  DEVELOPMENT
+  TESTING
+  DEPLOYMENT
+  MAINTENANCE
+}
+
 model Project {
   id              String            @id @default(uuid())
   createdAt       DateTime          @default(now())
@@ -118,8 +131,9 @@ model Project {
   content         Json?
   type            ProjectType       @default(OTHER)
   visibility      ProjectVisibility @default(PUBLIC)
-  status          ProjectStatus     @default(ACTIVE)
+  status          ProjectStatus     @default(DRAFT)
   priority        ProjectPriority   @default(MEDIUM)
+  stage           ProjectStage      @default(CONCEPT)
   startDate       DateTime?         @default(now())
   endDate         DateTime?
   figmaLink       String?           @default("")
