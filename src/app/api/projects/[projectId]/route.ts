@@ -19,6 +19,27 @@ export async function GET(req: NextRequest, { params }: any) {
         slug: params.projectId,
         createdByUserId: session.user.id,
       },
+      include: {
+        createdBy: {
+          select: {
+            image: true,
+            username: true,
+            role: true,
+            profile: {
+              select: {
+                designation: true,
+                company: true,
+                linkedin: true,
+                twitter: true,
+                github: true,
+                instagram: true,
+                facebook: true,
+                gender: true,
+              },
+            },
+          },
+        },
+      },
     });
 
     return createResponse("ok", null, project, 200);
