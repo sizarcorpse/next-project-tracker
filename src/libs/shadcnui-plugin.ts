@@ -14,7 +14,7 @@ export const shadcnPlugin = plugin(
         "--popover-foreground": "218, 27%, 94%",
 
         "--border": "220, 16%, 36%",
-        "--input": "219, 28%, 85%",
+        "--input": "219, 28%, 80%",
 
         "--card": "219, 28%, 88%",
         "--card-foreground": "220, 16%, 22%",
@@ -64,11 +64,17 @@ export const shadcnPlugin = plugin(
         "--secondary": "217.2 32.6% 17.5%",
         "--secondary-foreground": "214, 32%, 91%",
 
-        "--accent": "217.2 32.6% 17.5%",
-        "--accent-foreground": "214, 32%, 91%",
+        "--accent": "48, 100%, 49%",
+        "--accent-foreground": "220, 16%, 22%",
 
-        "--destructive": "0 84.2% 60.2%",
-        "--destructive-foreground": "214, 32%, 91%",
+        "--destructive": "348, 100%, 59%",
+        "--destructive-foreground": "220, 16%, 22%",
+
+        "--success": "120, 100%, 49%",
+        "--success-foreground": "219, 28%, 88%",
+
+        "--warning": "60, 100%, 59%",
+        "--warning-foreground": "220, 16%, 22%",
 
         "--ring": "217.2 32.6% 17.5%",
       },
@@ -89,7 +95,7 @@ export const shadcnPlugin = plugin(
         center: true,
         padding: "2rem",
         screens: {
-          "2xl": "1400px",
+          "2xl": "1536px",
         },
       },
       extend: {
