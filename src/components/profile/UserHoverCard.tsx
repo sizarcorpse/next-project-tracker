@@ -5,8 +5,14 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { Skeleton } from "@/components/ui/skeleton";
+
+const UserHoverCardLoading = () => {
+  return <Skeleton className="h-10 w-10 rounded-full bg-card" />;
+};
 
 const UserHoverCard = ({ item, open }: any) => {
+  if (!item) return <UserHoverCardLoading />;
   const {
     username,
     image,
@@ -21,7 +27,7 @@ const UserHoverCard = ({ item, open }: any) => {
       github,
       gender,
     },
-  } = item;
+  } = item || {};
 
   const avatarSrc = image || "/assets/images/default-avatar.jpeg";
 
