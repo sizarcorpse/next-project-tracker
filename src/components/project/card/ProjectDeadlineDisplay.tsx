@@ -6,8 +6,17 @@ import {
 } from "date-fns";
 
 import { Clock } from "lucide-react";
+import { FC } from "react";
 
-const ProjectDeadlineDisplay = ({ deadline }: any) => {
+type ProjectDeadlineDisplayProps = {
+  deadline: string;
+  size?: "small";
+};
+
+const ProjectDeadlineDisplay: FC<ProjectDeadlineDisplayProps> = ({
+  deadline,
+  size,
+}: any) => {
   const endDate = new Date(deadline);
   const today = new Date();
   const days = differenceInDays(endDate, today);
@@ -31,7 +40,11 @@ const ProjectDeadlineDisplay = ({ deadline }: any) => {
   }
 
   return (
-    <Badge className="bg-secondary hover:bg-secondary p-1 rounded-sm">
+    <Badge
+      className={`bg-secondary hover:bg-secondary ${
+        size === "small" ? "p-1" : "p-2"
+      } rounded-sm`}
+    >
       <div className="flex flex-col items-start justify-start gap-1">
         <time
           dateTime={deadline}

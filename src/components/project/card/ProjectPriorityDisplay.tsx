@@ -45,6 +45,7 @@ const projectPriorities = [
 type ProjectPriorityDisplayProps = {
   priority: string;
   layout?: "icon" | "text";
+  size?: "small";
 };
 
 const TooltipContentInfo = ({ item }: any) => (
@@ -79,12 +80,16 @@ const TooltipContentInfo = ({ item }: any) => (
   </TooltipContent>
 );
 
-const LayoutIconOnly = ({ item }: any) => {
+const LayoutIconOnly = ({ item, size }: any) => {
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger>
-          <Badge className="rounded-full p-2">
+          <Badge
+            className={`${
+              size === "small" ? "rounded-sm p-1 " : "p-2 rounded-md"
+            }`}
+          >
             <span className="text-xs text-primary-foreground inline-flex items-center justify-center gap-2">
               {item?.icon}
             </span>
@@ -119,6 +124,7 @@ const LayoutIconWithText = ({ item }: any) => {
 const ProjectPriorityDisplay: FC<ProjectPriorityDisplayProps> = ({
   priority,
   layout = "icon",
+  size,
 }: any) => {
   const priorityItem = projectPriorities.find(
     (item) => item.value === priority
@@ -130,7 +136,7 @@ const ProjectPriorityDisplay: FC<ProjectPriorityDisplayProps> = ({
 
   return (
     <>
-      {layout === "icon" && <LayoutIconOnly item={priorityItem} />}
+      {layout === "icon" && <LayoutIconOnly item={priorityItem} size={size} />}
       {layout === "text" && <LayoutIconWithText item={priorityItem} />}
     </>
   );

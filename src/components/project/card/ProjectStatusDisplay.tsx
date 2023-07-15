@@ -96,7 +96,7 @@ const LayoutIconOnly = ({ item }: any) => {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger>
-          <Badge className="rounded-full p-2">
+          <Badge className="rounded-md p-2">
             <span className="text-xs text-primary-foreground inline-flex items-center justify-center gap-2">
               {item?.icon}
             </span>

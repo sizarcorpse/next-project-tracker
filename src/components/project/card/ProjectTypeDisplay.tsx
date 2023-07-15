@@ -71,6 +71,7 @@ const projectTypes = [
 type ProjectTypeDisplayProps = {
   type: string;
   layout?: "icon" | "text";
+  size?: "small";
 };
 
 const TooltipContentInfo = ({ item }: any) => (
@@ -105,12 +106,16 @@ const TooltipContentInfo = ({ item }: any) => (
   </TooltipContent>
 );
 
-const LayoutIconOnly = ({ item }: any) => {
+const LayoutIconOnly = ({ item, size }: any) => {
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger>
-          <Badge className="rounded-full p-2">
+          <Badge
+            className={`${
+              size === "small" ? "rounded-sm p-1 " : "p-2 rounded-md"
+            }`}
+          >
             <span className="text-xs text-primary-foreground inline-flex items-center justify-center gap-2">
               {item?.icon}
             </span>
@@ -145,12 +150,13 @@ const LayoutIconWithText = ({ item }: any) => {
 const ProjectTypeDisplay: FC<ProjectTypeDisplayProps> = ({
   type,
   layout = "icon",
+  size,
 }: any) => {
   const typeItem = projectTypes.find((item) => item.value === type);
 
   return (
     <>
-      {layout === "icon" && <LayoutIconOnly item={typeItem} />}
+      {layout === "icon" && <LayoutIconOnly item={typeItem} size={size} />}
       {layout === "text" && <LayoutIconWithText item={typeItem} />}
     </>
   );

@@ -65,6 +65,7 @@ const projectStages = [
 type ProjectStageDisplayProps = {
   stage: string;
   layout?: "icon" | "text";
+  size?: "small";
 };
 
 const TooltipContentInfo = ({ item }: any) => (
@@ -99,12 +100,16 @@ const TooltipContentInfo = ({ item }: any) => (
   </TooltipContent>
 );
 
-const LayoutIconOnly = ({ item }: any) => {
+const LayoutIconOnly = ({ item, size }: any) => {
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger>
-          <Badge className="rounded-full p-2">
+          <Badge
+            className={`${
+              size === "small" ? "rounded-sm p-1 " : "p-2 rounded-md"
+            }`}
+          >
             <span className="text-xs text-primary-foreground inline-flex items-center justify-center gap-2">
               {item?.icon}
             </span>
@@ -139,12 +144,13 @@ const LayoutIconWithText = ({ item }: any) => {
 const ProjectStageDisplay: FC<ProjectStageDisplayProps> = ({
   stage,
   layout = "icon",
+  size,
 }: any) => {
   const stageItem = projectStages.find((item) => item.value === stage);
 
   return (
     <>
-      {layout === "icon" && <LayoutIconOnly item={stageItem} />}
+      {layout === "icon" && <LayoutIconOnly item={stageItem} size={size} />}
       {layout === "text" && <LayoutIconWithText item={stageItem} />}
     </>
   );
