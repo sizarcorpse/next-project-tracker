@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { Edit, MoreVertical, Trash } from "lucide-react";
+import { Edit, MoreVertical, Trash, View } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const ProjectDropdownActions = ({ projectSlug: slug }: any) => {
@@ -31,6 +31,13 @@ const ProjectDropdownActions = ({ projectSlug: slug }: any) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
+        <DropdownMenuItem
+          className="w-full inline-flex item-center justify-between cursor-pointer"
+          onClick={() => router.push(`/projects/${slug}`)}
+        >
+          View
+          <View className="h-4 w-4 mr-1" />
+        </DropdownMenuItem>
         <DropdownMenuItem
           className="w-full inline-flex item-center justify-between cursor-pointer"
           onClick={handleEdit}
