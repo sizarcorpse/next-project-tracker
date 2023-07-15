@@ -1,5 +1,11 @@
 import { Badge } from "@/components/ui/badge";
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
   AppWindow,
   Frame,
   Gamepad2,
@@ -11,14 +17,7 @@ import {
 } from "lucide-react";
 import { FC } from "react";
 
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-
-const types = [
+const projectTypes = [
   {
     label: "Web",
     value: "WEB",
@@ -61,7 +60,6 @@ const types = [
     info: "An other project is a project that does not fit into any of the above categories.",
     icon: <PanelTop size={16} />,
   },
-
   {
     label: "Hardware",
     value: "HARDWARE",
@@ -75,6 +73,38 @@ type ProjectTypeDisplayProps = {
   layout?: "icon" | "text";
 };
 
+const TooltipContentInfo = ({ item }: any) => (
+  <TooltipContent>
+    <div className="flex flex-col items-start justify-start gap-2 w-80 p-2">
+      {projectTypes.map((type) => (
+        <div
+          className="flex flex-row items-start justify-start gap-4"
+          key={type.value}
+        >
+          <span
+            className={`${
+              item.value === type.value
+                ? "text-accent"
+                : "text-popover-foreground"
+            }`}
+          >
+            {type?.icon}
+          </span>
+          <span
+            className={`${
+              item.value === type.value
+                ? "text-accent"
+                : "text-popover-foreground"
+            } text-xs `}
+          >
+            {type?.info}
+          </span>
+        </div>
+      ))}
+    </div>
+  </TooltipContent>
+);
+
 const LayoutIconOnly = ({ item }: any) => {
   return (
     <TooltipProvider>
@@ -86,35 +116,27 @@ const LayoutIconOnly = ({ item }: any) => {
             </span>
           </Badge>
         </TooltipTrigger>
-        <TooltipContent>
-          <div className="flex flex-col items-start justify-start gap-2 w-80 p-2">
-            {types.map((type, index) => (
-              <div
-                className="flex flex-row items-start justify-start gap-4"
-                key={index}
-              >
-                <span
-                  className={`${
-                    item.value === type.value
-                      ? "text-accent"
-                      : "text-popover-foreground"
-                  }`}
-                >
-                  {type?.icon}
-                </span>
-                <span
-                  className={`${
-                    item.value === type.value
-                      ? "text-accent"
-                      : "text-popover-foreground"
-                  } text-xs `}
-                >
-                  {type?.info}
-                </span>
-              </div>
-            ))}
-          </div>
-        </TooltipContent>
+        <TooltipContentInfo item={item} />
+      </Tooltip>
+    </TooltipProvider>
+  );
+};
+
+const LayoutIconWithText = ({ item }: any) => {
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger>
+          <Badge className="rounded-md p-2 inline-flex items-start justify-center gap-2">
+            <span className="text-xs text-primary-foreground">
+              {item?.icon}
+            </span>
+            <span className="text-xs text-primary-foreground">
+              {item?.label}
+            </span>
+          </Badge>
+        </TooltipTrigger>
+        <TooltipContentInfo item={item} />
       </Tooltip>
     </TooltipProvider>
   );
@@ -124,9 +146,14 @@ const ProjectTypeDisplay: FC<ProjectTypeDisplayProps> = ({
   type,
   layout = "icon",
 }: any) => {
-  const typeItem = types.find((item) => item.value === type);
+  const typeItem = projectTypes.find((item) => item.value === type);
 
-  return <>{layout === "icon" && <LayoutIconOnly item={typeItem} />}</>;
+  return (
+    <>
+      {layout === "icon" && <LayoutIconOnly item={typeItem} />}
+      {layout === "text" && <LayoutIconWithText item={typeItem} />}
+    </>
+  );
 };
 
 export default ProjectTypeDisplay;
