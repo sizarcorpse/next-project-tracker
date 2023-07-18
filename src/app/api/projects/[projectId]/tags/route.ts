@@ -70,10 +70,13 @@ export async function POST(req: NextRequest, { params }: any) {
     if (!body.name.startsWith("#")) {
       body.name = `#${body.name}`;
     }
+    body.name = body.name.replace(/\s/g, "");
+    const slug = slugify(body.name, { lower: true });
 
     const tag = await prisma.tag.create({
       data: {
         name: body.name,
+        slug: slug,
         projects: {
           connect: {
             id: project.id,
