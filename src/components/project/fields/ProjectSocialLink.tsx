@@ -57,12 +57,13 @@ const ProjectSocialLink = ({ form, name }: any) => {
                 {links.find((link) => link.id === name)?.icon}
               </div>
               <Input
+                {...field}
+                value={field.value === null ? "" : field.value}
                 placeholder={
                   links.find((link) => link.id === name)?.placeholder
                 }
                 autoComplete="off"
                 className="bg-muted border-none text-base focus:ring-0 focus:outline-0 focus-visible:ring-0 focus-visible:outline-0 focus-visible:ring-offset-0"
-                {...field}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
               />
