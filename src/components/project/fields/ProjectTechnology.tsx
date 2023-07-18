@@ -146,8 +146,12 @@ const ProjectTechnology = ({ form }: any) => {
           </FormLabel>
           <FormControl>
             <Select
-              {...field}
+              value={field.value}
+              onChange={(value) => {
+                form.setValue("technologies", value);
+              }}
               options={options}
+              id="technologies"
               isMulti
               placeholder="Select your technologies"
               components={{
