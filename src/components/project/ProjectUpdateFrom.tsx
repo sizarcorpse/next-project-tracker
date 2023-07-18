@@ -22,7 +22,7 @@ import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { projectSchema } from "@/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { mutate } from "swr";
@@ -65,11 +65,27 @@ const ProjectUpdateFrom: FC<ProjectUpdateFromProps> = ({ project }) => {
     formState: { isValid },
   } = form;
 
+  const formattedTechnologies = useMemo(() => {
+    if (!project) {
+      return [];
+    }
+
+    return project.technologies.map((technology: any) => ({
+      value: technology.id,
+      label: technology.name,
+      icon: technology.icon,
+      id: technology.id,
+    }));
+  }, [project]);
+
   useEffect(() => {
     if (project) {
-      reset(project);
+      reset({
+        ...project,
+        technologies: formattedTechnologies,
+      });
     }
-  }, [project, reset]);
+  }, [project, reset, formattedTechnologies]);
 
   const onSubmit = async (data: any) => {
     try {
