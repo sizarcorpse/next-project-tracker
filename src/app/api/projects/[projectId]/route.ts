@@ -22,6 +22,7 @@ export async function GET(req: NextRequest, { params }: any) {
       include: {
         createdBy: {
           select: {
+            id: true,
             image: true,
             username: true,
             role: true,
@@ -39,6 +40,7 @@ export async function GET(req: NextRequest, { params }: any) {
             },
           },
         },
+        technologies: true,
       },
     });
 
@@ -91,11 +93,14 @@ export async function PATCH(req: NextRequest, { params }: any) {
         githubLink: body.githubLink,
         devLink: body.devLink,
         liveLink: body.liveLink,
+        technologies: {
+          set: body.technologies,
+        },
       },
     });
 
     return createResponse("ok", null, project, 200);
   } catch (error) {
-    return createResponse("error", "Project create failed", null, 500);
+    return createResponse("error", "Project update failed", null, 500);
   }
 }
