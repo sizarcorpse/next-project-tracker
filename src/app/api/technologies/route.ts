@@ -3,6 +3,7 @@ import { prisma } from "@/libs/prisma";
 import { createResponse } from "@/utils/";
 import { getServerSession } from "next-auth/next";
 import { NextRequest } from "next/server";
+import slugify from "slugify";
 
 export async function GET(req: NextRequest) {
   try {
@@ -42,7 +43,8 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json();
     const { name, icon } = body;
-    const slug = name.toLowerCase().replace(" ", "-");
+    const slug = slugify(name, { lower: true });
+    const label = name;
     const iconUrl = `https://simpleicons.org/icons/${icon}.svg`;
 
     const existingTechnology = await prisma.technology.findFirst({
@@ -59,6 +61,7 @@ export async function POST(req: NextRequest) {
       data: {
         name,
         slug,
+        label,
         icon: iconUrl,
         createdBy: {
           connect: {
