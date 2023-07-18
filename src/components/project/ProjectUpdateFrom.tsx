@@ -5,6 +5,7 @@ import {
   ProjectEndDate,
   ProjectPriority,
   ProjectSocialLink,
+  ProjectTechnology,
   ProjectType,
   ProjectVisibility,
 } from "@/components/project/";
@@ -55,6 +56,7 @@ const ProjectUpdateFrom: FC<ProjectUpdateFromProps> = ({ project }) => {
       githubLink: project?.githubLink || null,
       devLink: project?.devLink || null,
       liveLink: project?.liveLink || null,
+      technologies: project?.technologies || [],
     },
   });
   const {
@@ -91,6 +93,9 @@ const ProjectUpdateFrom: FC<ProjectUpdateFromProps> = ({ project }) => {
             githubLink: data.githubLink,
             devLink: data.devLink,
             liveLink: data.liveLink,
+            technologies: data.technologies.map((technology: any) => ({
+              id: technology.value,
+            })),
           }),
         }
       );
@@ -148,6 +153,9 @@ const ProjectUpdateFrom: FC<ProjectUpdateFromProps> = ({ project }) => {
             />
           </div>
           <Separator />
+          <div className="grid grid-cols-1 gap-6">
+            <ProjectTechnology form={form} />
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-6">
             <ProjectType form={form} />
             <ProjectPriority form={form} />
