@@ -223,6 +223,7 @@ model Tag {
   name     String
   color    String?
   icon     String?
+  slug     String    @unique
   projects Project[] @relation("ProjectTags")
   tasks    Task[]    @relation("TaskTags")
 
@@ -237,6 +238,7 @@ model Technology {
   createdByUserId String
   name            String    @unique
   slug            String    @unique
+  label           String?
   icon            String?
   projects        Project[] @relation("ProjectTechnologies")
 
