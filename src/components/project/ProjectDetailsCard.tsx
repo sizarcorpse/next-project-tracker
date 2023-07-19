@@ -9,6 +9,7 @@ import {
   ProjectPriorityDisplay,
   ProjectStageDisplay,
   ProjectStatusDisplay,
+  ProjectTechnologyDisplay,
   ProjectTitleDisplay,
   ProjectTypeDisplay,
   ProjectVisibilityDisplay,
@@ -91,6 +92,7 @@ const ProjectDetailsCard = () => {
           </div>
         </div>
         <ProjectDescription description={project.description} />
+        <ProjectTechnologyDisplay technologies={project.technologies} />
         <div className="flex flex-row items-center justify-start gap-2">
           <ProjectLinksDisplay
             githubLink={project.githubLink}
