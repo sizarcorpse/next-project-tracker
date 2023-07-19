@@ -1,7 +1,10 @@
 export { default as CreateNewProject } from "./CreateNewProject";
 export { default as CreateProjectForm } from "./CreateProjectForm";
 export { default as ProjectCard } from "./ProjectCard";
+export { default as ProjectCreateTagForm } from "./ProjectCreateTagForm";
 export { default as ProjectDetailsCard } from "./ProjectDetailsCard";
+export { default as ProjectTagCard } from "./ProjectTagCard";
+export { default as ProjectTagsCard } from "./ProjectTagsCard";
 export { default as ProjectUpdate } from "./ProjectUpdate";
 export { default as ProjectUpdateFrom } from "./ProjectUpdateFrom";
 export { default as ProjectsCollection } from "./ProjectsCollection";
@@ -9,5 +12,6 @@ export { default as ProjectCurrentStage } from "./fields/ProjectCurrentStage";
 export { default as ProjectEndDate } from "./fields/ProjectEndDate";
 export { default as ProjectPriority } from "./fields/ProjectPriority";
 export { default as ProjectSocialLink } from "./fields/ProjectSocialLink";
+export { default as ProjectTechnology } from "./fields/ProjectTechnology";
 export { default as ProjectType } from "./fields/ProjectType";
 export { default as ProjectVisibility } from "./fields/ProjectVisibility";
