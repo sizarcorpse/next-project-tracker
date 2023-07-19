@@ -55,7 +55,7 @@ const ProjectCard = ({ project }: any) => {
       </div>
       <div className="w-full px-4 py-2 flex flex-col items-start justify-start gap-2">
         <ProjectTitle title={project.title} />
-        <ProjectTagsDisplay />
+        <ProjectTagsDisplay tags={project.tags} />
         <Separator className="bg-secondary" />
         <div className="flex flex-row items-center justify-between w-full">
           <div></div>
