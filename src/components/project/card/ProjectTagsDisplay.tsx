@@ -1,31 +1,19 @@
+"use client";
 import { Badge } from "@/components/ui/badge";
+import { useRouter } from "next/router";
 
-const tags = [
-  {
-    id: 1,
-    name: "Marking",
-    slug: "marking",
-  },
-  {
-    id: 2,
-    name: "Coding",
-    slug: "coding",
-  },
-  {
-    id: 3,
-    name: "Design",
-    slug: "design",
-  },
-];
-const ProjectTagsDisplay = ({ project }: any) => {
+const ProjectTagsDisplay = ({ tags }: any) => {
+  const router = useRouter();
+
   return (
     <div className="flex flex-row items-center justify-start gap-1">
       {tags.map((tag: any) => (
         <Badge
           key={tag.id}
           className="bg-secondary hover:bg-secondary rounded-sm"
+          onClick={() => router.push(`/tags/${tag.slug}`)}
         >
-          <span className="text-xs text-secondary-foreground">#{tag.name}</span>
+          <span className="text-xs text-secondary-foreground">{tag.name}</span>
         </Badge>
       ))}
     </div>
