@@ -9,25 +9,29 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { cn } from "@/libs/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FC } from "react";
-
 type TechnologyCardProps = {
   item: {
     name: string;
     icon: string;
     slug: string;
   };
+  className?: string;
 };
 
-const TechnologyCard: FC<TechnologyCardProps> = ({ item }) => {
+const TechnologyCard: FC<TechnologyCardProps> = ({ item, className }) => {
   const { name, icon, slug } = item;
   const router = useRouter();
   return (
     <Card
-      className="group flex flex-row items-center py-2 px-4 gap-2 cursor-pointer hover:bg-primary hover:text-primary-foreground"
+      className={cn(
+        "group flex flex-row items-center py-2 px-4 gap-2 cursor-pointer hover:bg-primary hover:text-primary-foreground",
+        className
+      )}
       onClick={() => router.push(`/technology/${slug}`)}
     >
       <Svg
