@@ -43,6 +43,7 @@ export async function GET(req: NextRequest) {
             },
           },
         },
+        tags: true,
       },
       skip: (page - 1) * limit,
       take: limit,
