@@ -76,6 +76,7 @@ export async function PATCH(req: NextRequest, { params }: any) {
 
     const slug = body.title && slugify(body.title, { lower: true });
     body.slug = slug;
+
     const project = await prisma.project.update({
       where: {
         id: params.projectId,
