@@ -73,9 +73,9 @@ export async function PATCH(req: NextRequest, { params }: any) {
     }
 
     const body = await req.json();
-    const slug = slugify(body.title, { lower: true });
-    body.slug = slug;
 
+    const slug = body.title && slugify(body.title, { lower: true });
+    body.slug = slug;
     const project = await prisma.project.update({
       where: {
         id: params.projectId,
@@ -93,6 +93,7 @@ export async function PATCH(req: NextRequest, { params }: any) {
         githubLink: body.githubLink,
         devLink: body.devLink,
         liveLink: body.liveLink,
+        content: body.content,
         technologies: {
           set: body.technologies,
         },
