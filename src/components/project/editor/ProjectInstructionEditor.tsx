@@ -1,31 +1,29 @@
 "use client";
-import { EditorRender } from "@/components/project";
+
 import { Button } from "@/components/ui/button";
+import { useProjectInstructionSheet } from "@/hooks/";
 import EditorJS from "@editorjs/editorjs";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { mutate } from "swr";
-
 type EditorProps = {
   editable?: boolean;
   content?: any;
   projectId: string;
 };
 
-const Editor: FC<EditorProps> = ({ editable = true, content, projectId }) => {
+const ProjectInstructionEditor: FC<EditorProps> = ({
+  editable = true,
+  content,
+  projectId,
+}) => {
   const ref = useRef<EditorJS>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const [isEditable, setIsEditable] = useState<boolean>(editable);
-  const {
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      content: {},
-    },
-  });
+  const { onClose } = useProjectInstructionSheet();
+  const { handleSubmit } = useForm();
 
   const initializeEditor = useCallback(async () => {
     const EditorJS = (await import("@editorjs/editorjs")).default;
@@ -47,7 +45,7 @@ const Editor: FC<EditorProps> = ({ editable = true, content, projectId }) => {
         },
         placeholder: "Type here to write project instructions",
         inlineToolbar: true,
-        data: content || { blocks: [] },
+        data: content,
         readOnly: !isEditable,
         tools: {
           header: {
@@ -104,11 +102,7 @@ const Editor: FC<EditorProps> = ({ editable = true, content, projectId }) => {
     }
   }, [isMounted, initializeEditor]);
 
-  if (!isMounted) {
-    return null;
-  }
-
-  async function onSubmit(data: any) {
+  const onSubmit = async () => {
     try {
       const blocks = await ref.current?.save();
       setIsLoading(true);
@@ -135,20 +129,27 @@ const Editor: FC<EditorProps> = ({ editable = true, content, projectId }) => {
       toast.error(error.message);
       setIsLoading(false);
     }
-  }
+  };
+
   return (
-    <div className="w-full h-full bg-card text-card-foreground p-8 rounded-md">
+    <div className="w-full h-full rounded-md">
       <form
-        className="w-full  h-full text-card-foreground"
+        className="text-card-foreground flex flex-col gap-6"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div id="editor" className="bg-secondary p-4 rounded-md shadow-sm" />
-        <div>
-          <Button type="submit">{isLoading ? "Loading..." : "Save"}</Button>
+        <div
+          id="editor"
+          className="w-full h-full bg-card text-card-foreground p-4 rounded-md shadow-sm"
+        />
+        <div className="flex flex-row items-center justify-start gap-4">
+          <Button type="button" variant="secondary" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button type="submit">Update Instruction</Button>
         </div>
       </form>
     </div>
   );
 };
 
-export default Editor;
+export default ProjectInstructionEditor;
