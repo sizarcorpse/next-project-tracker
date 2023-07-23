@@ -1,52 +1,47 @@
 "use client";
-import {
-  Editor,
-  ProjectDetailsCard,
-  ProjectTagsCard,
-} from "@/components/project/";
+
+import { ProjectInstructionEditor } from "@/components/project/";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet";
-import { useParams } from "next/navigation";
-import useSwr from "swr";
+import { useProjectInstructionSheet } from "@/hooks/";
 
-const ProjectInstruction = () => {
-  const { project: project_slug } = useParams();
-  const { data, error, isLoading } = useSwr(
-    `${process.env.NEXT_API_URL}/projects/${project_slug}`
-  );
-
-  if (isLoading) return <div>Loading...</div>;
-  const { content, id } = data?.data || {};
+const ProjectInstruction = ({ content, projectId }: any) => {
+  const { isOpen, onOpen, onClose } = useProjectInstructionSheet();
 
   return (
-    <div>
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button variant="outline">Open</Button>
-        </SheetTrigger>
-        <SheetContent className="bg-popover w-full p-0 overflow-auto md:max-w-screen-lg lg:max-w-screen-xl">
-          <div className="w-full flex flex-col items-start justify-center gap-6 p-4 sm:p-6 md:p-8 lg:p-10 lg:order-1 xl:p-12">
-            <SheetHeader>
-              <SheetTitle>Instructions</SheetTitle>
-              <SheetDescription>
-                This is a description of the instructions to be executed by the
-                user.
-              </SheetDescription>
-            </SheetHeader>
-            <Editor content={content} projectId={id} />
-          </div>
-        </SheetContent>
-      </Sheet>
-    </div>
+    <Sheet onOpenChange={onClose} open={isOpen}>
+      <Button
+        variant="outline"
+        className="w-full bg-transparent"
+        onClick={onOpen}
+      >
+        View Project Instructions
+      </Button>
+      <SheetContent className="bg-popover w-full p-0 overflow-auto max-w-sm md:max-w-screen-md lg:max-w-screen-lg">
+        <div className="w-full flex flex-col items-start justify-center gap-6 p-4 sm:p-6 md:p-8 lg:p-10 lg:order-1 xl:p-12">
+          <SheetHeader>
+            <SheetTitle className="text-xl">Instructions</SheetTitle>
+            <SheetDescription className="text-sm">
+              This is a description of the instructions to be executed by the
+              user.
+            </SheetDescription>
+          </SheetHeader>
+          {content && (
+            <ProjectInstructionEditor
+              content={content}
+              projectId={projectId}
+              editable={true}
+            />
+          )}
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 };
 
