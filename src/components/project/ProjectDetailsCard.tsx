@@ -2,6 +2,7 @@
 
 import { PTDialog } from "@/components/common";
 import { UserHoverCard } from "@/components/profile";
+import { ProjectInstruction } from "@/components/project";
 import {
   ProjectDeadlineDisplay,
   ProjectDropdownActions,
@@ -14,8 +15,6 @@ import {
   ProjectTypeDisplay,
   ProjectVisibilityDisplay,
 } from "@/components/project/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { useDialog } from "@/hooks/";
 import Image from "next/image";
 import { useParams } from "next/navigation";
@@ -56,7 +55,7 @@ const ProjectDescription = ({ description }: any) => {
 
 const ProjectDetailsCard = () => {
   const { project: project_slug } = useParams();
-  const { data, error, isLoading } = useSwr(
+  const { data, isLoading } = useSwr(
     `${process.env.NEXT_API_URL}/projects/${project_slug}`
   );
 
@@ -101,6 +100,7 @@ const ProjectDetailsCard = () => {
             devLink={project.devLink}
           />
         </div>
+        <ProjectInstruction content={project.content} projectId={project.id} />
       </div>
     </div>
   );
