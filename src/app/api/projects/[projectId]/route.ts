@@ -17,7 +17,6 @@ export async function GET(req: NextRequest, { params }: any) {
     const project = await prisma.project.findFirst({
       where: {
         slug: params.projectId,
-        createdByUserId: session.user.id,
       },
       include: {
         createdBy: {
