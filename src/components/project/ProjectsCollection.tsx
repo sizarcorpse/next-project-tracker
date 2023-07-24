@@ -8,7 +8,7 @@ const ProjectsCollection = () => {
 
   return (
     <div>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {data?.data?.projects.map((project: any) => (
           <ProjectCard key={project.id} project={project} />
         ))}
