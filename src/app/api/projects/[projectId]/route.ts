@@ -89,6 +89,7 @@ export async function PATCH(req: NextRequest, { params }: any) {
         priority: body.priority,
         visibility: body.visibility,
         stage: body.stage,
+        status: body.status,
         endDate: body.endDate,
         figmaLink: body.figmaLink,
         githubLink: body.githubLink,
