@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Tooltip,
   TooltipContent,
@@ -102,9 +103,12 @@ const ProjectVisibilityDisplay: FC<ProjectVisibilityDisplayProps> = ({
   layout = "icon",
   className,
 }: any) => {
-  const typeItem = projectVisibilities.find(
-    (item) => item.value === visibility
-  );
+  const typeItem =
+    projectVisibilities.find((item) => item.value === visibility) || null;
+
+  if (!visibility) {
+    return <Skeleton className="h-9 w-9 bg-muted" />;
+  }
 
   return (
     <>

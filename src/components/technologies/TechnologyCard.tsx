@@ -14,6 +14,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FC } from "react";
+import { Skeleton } from "../ui/skeleton";
 type TechnologyCardProps = {
   item: {
     name: string;
@@ -26,6 +27,9 @@ type TechnologyCardProps = {
 const TechnologyCard: FC<TechnologyCardProps> = ({ item, className }) => {
   const { name, icon, slug } = item;
   const router = useRouter();
+
+  if (!item) return <Skeleton className="h-9 w-12 bg-secondary" />;
+
   return (
     <Card
       className={cn(

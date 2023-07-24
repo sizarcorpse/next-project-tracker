@@ -16,13 +16,24 @@ const ProjectInstruction = ({ content, projectId }: any) => {
 
   return (
     <Sheet onOpenChange={onClose} open={isOpen}>
-      <Button
-        variant="outline"
-        className="w-full bg-transparent"
-        onClick={onOpen}
-      >
-        View Project Instructions
-      </Button>
+      {!content ? (
+        <Button
+          variant="outline"
+          className="w-full bg-transparent"
+          onClick={onOpen}
+        >
+          Add Project Instructions
+        </Button>
+      ) : (
+        <Button
+          variant="outline"
+          className="w-full bg-transparent"
+          onClick={onOpen}
+        >
+          View Project Instructions
+        </Button>
+      )}
+
       <SheetContent className="bg-popover w-full p-0 overflow-auto max-w-sm md:max-w-screen-md lg:max-w-screen-lg">
         <div className="w-full flex flex-col items-start justify-center gap-6 p-4 sm:p-6 md:p-8 lg:p-10 lg:order-1 xl:p-12">
           <SheetHeader>
@@ -32,13 +43,11 @@ const ProjectInstruction = ({ content, projectId }: any) => {
               user.
             </SheetDescription>
           </SheetHeader>
-          {content && (
-            <ProjectInstructionEditor
-              content={content}
-              projectId={projectId}
-              editable={true}
-            />
-          )}
+          <ProjectInstructionEditor
+            content={content}
+            projectId={projectId}
+            editable={true}
+          />
         </div>
       </SheetContent>
     </Sheet>

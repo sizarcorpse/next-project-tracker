@@ -1,3 +1,4 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/libs/utils";
 import { FC } from "react";
 
@@ -12,6 +13,10 @@ const ProjectTitleDisplay: FC<ProjectTitleDisplayProps> = ({
   size = "medium",
   className,
 }) => {
+  if (!title) {
+    return <Skeleton className="h-9 w-full bg-muted" />;
+  }
+
   return (
     <h2
       className={cn(

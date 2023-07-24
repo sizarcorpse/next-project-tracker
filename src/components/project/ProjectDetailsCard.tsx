@@ -15,6 +15,7 @@ import {
   ProjectTypeDisplay,
   ProjectVisibilityDisplay,
 } from "@/components/project/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useDialog } from "@/hooks/";
 import Image from "next/image";
 import { useParams } from "next/navigation";
@@ -36,6 +37,11 @@ const ProjectCoverImage = ({ image }: any) => {
 
 const ProjectDescription = ({ description }: any) => {
   const { onOpen } = useDialog();
+
+  if (!description) {
+    return <Skeleton className="h-20 w-full bg-muted" />;
+  }
+
   return (
     <div>
       <p
@@ -59,11 +65,10 @@ const ProjectDetailsCard = () => {
     `${process.env.NEXT_API_URL}/projects/${project_slug}`
   );
 
-  if (isLoading) return <div>Loading...</div>;
   const project = data?.data || {};
 
   return (
-    <div className="bg-card text-card-foreground rounded-md overflow-hidden">
+    <div className="w-full bg-card text-card-foreground rounded-md overflow-hidden">
       <div className="relative w-full">
         <ProjectCoverImage image={project.coverImage} />
         <div className="absolute top-0 h-full w-full p-4 flex flex-col items-start justify-between">
@@ -92,14 +97,12 @@ const ProjectDetailsCard = () => {
         </div>
         <ProjectDescription description={project.description} />
         <ProjectTechnologyDisplay technologies={project.technologies} />
-        <div className="flex flex-row items-center justify-start gap-2">
-          <ProjectLinksDisplay
-            githubLink={project.githubLink}
-            figmaLink={project.figmaLink}
-            liveLink={project.liveLink}
-            devLink={project.devLink}
-          />
-        </div>
+        <ProjectLinksDisplay
+          githubLink={project.githubLink}
+          figmaLink={project.figmaLink}
+          liveLink={project.liveLink}
+          devLink={project.devLink}
+        />
         <ProjectInstruction content={project.content} projectId={project.id} />
       </div>
     </div>

@@ -1,10 +1,10 @@
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   differenceInDays,
   differenceInHours,
   differenceInMonths,
 } from "date-fns";
-
 import { Clock } from "lucide-react";
 import { FC } from "react";
 
@@ -17,6 +17,10 @@ const ProjectDeadlineDisplay: FC<ProjectDeadlineDisplayProps> = ({
   deadline,
   size,
 }: any) => {
+  if (!deadline) {
+    return <Skeleton className="h-9 w-20 bg-muted" />;
+  }
+
   const endDate = new Date(deadline);
   const today = new Date();
   const days = differenceInDays(endDate, today);

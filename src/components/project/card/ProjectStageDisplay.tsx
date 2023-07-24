@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Tooltip,
   TooltipContent,
@@ -146,7 +147,11 @@ const ProjectStageDisplay: FC<ProjectStageDisplayProps> = ({
   layout = "icon",
   size,
 }: any) => {
-  const stageItem = projectStages.find((item) => item.value === stage);
+  const stageItem = projectStages.find((item) => item.value === stage) || null;
+
+  if (!stage) {
+    return <Skeleton className="h-9 w-9 bg-muted" />;
+  }
 
   return (
     <>

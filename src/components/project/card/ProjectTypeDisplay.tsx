@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Tooltip,
   TooltipContent,
@@ -152,7 +153,10 @@ const ProjectTypeDisplay: FC<ProjectTypeDisplayProps> = ({
   layout = "icon",
   size,
 }: any) => {
-  const typeItem = projectTypes.find((item) => item.value === type);
+  const typeItem = projectTypes.find((item) => item.value === type) || null;
+  if (!type) {
+    return <Skeleton className="h-9 w-9 bg-muted" />;
+  }
 
   return (
     <>

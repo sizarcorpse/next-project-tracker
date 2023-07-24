@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Brush, PocketKnife, Sword, Swords, Wrench } from "lucide-react";
 import { FC } from "react";
 
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Tooltip,
   TooltipContent,
@@ -126,12 +127,11 @@ const ProjectPriorityDisplay: FC<ProjectPriorityDisplayProps> = ({
   layout = "icon",
   size,
 }: any) => {
-  const priorityItem = projectPriorities.find(
-    (item) => item.value === priority
-  );
+  const priorityItem =
+    projectPriorities.find((item) => item.value === priority) || null;
 
-  if (!priorityItem) {
-    return null;
+  if (!priority) {
+    return <Skeleton className="h-9 w-9 bg-muted" />;
   }
 
   return (

@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Tooltip,
   TooltipContent,
@@ -14,7 +15,6 @@ import {
   XSquare,
 } from "lucide-react";
 import { FC } from "react";
-
 const projectStatus = [
   {
     label: "Active",
@@ -132,7 +132,11 @@ const ProjectStatusDisplay: FC<ProjectStatusDisplayProps> = ({
   status,
   layout = "icon",
 }: any) => {
-  const typeItem = projectStatus.find((item) => item.value === status);
+  const typeItem = projectStatus.find((item) => item.value === status) || null;
+
+  if (!status) {
+    return <Skeleton className="h-9 w-9 bg-muted" />;
+  }
 
   return (
     <>
