@@ -5,6 +5,7 @@ import {
   ProjectEndDate,
   ProjectPriority,
   ProjectSocialLink,
+  ProjectStatus,
   ProjectTechnology,
   ProjectType,
   ProjectVisibility,
@@ -51,6 +52,7 @@ const ProjectUpdateFrom: FC<ProjectUpdateFromProps> = ({ project }) => {
       priority: project?.priority || "LOW",
       visibility: project?.visibility || "PUBLIC",
       stage: project?.stage || "CONCEPT",
+      status: project?.status || "DRAFT",
       endDate: project?.endDate || null,
       figmaLink: project?.figmaLink || null,
       githubLink: project?.githubLink || null,
@@ -104,6 +106,7 @@ const ProjectUpdateFrom: FC<ProjectUpdateFromProps> = ({ project }) => {
             priority: data.priority,
             visibility: data.visibility,
             stage: data.stage,
+            status: data.status,
             endDate: data.endDate,
             figmaLink: data.figmaLink,
             githubLink: data.githubLink,
@@ -178,6 +181,7 @@ const ProjectUpdateFrom: FC<ProjectUpdateFromProps> = ({ project }) => {
             <ProjectVisibility form={form} />
             <ProjectCurrentStage form={form} />
             <ProjectEndDate form={form} />
+            <ProjectStatus form={form} />
           </div>
           <Separator />
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-6">
