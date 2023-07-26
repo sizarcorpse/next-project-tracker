@@ -208,7 +208,7 @@ const ProjectAddMembersForm = forwardRef((props: any, ref: any) => {
                     options={options}
                     id="members"
                     isMulti
-                    placeholder="Select your technologies"
+                    placeholder="Select a member"
                     components={{
                       Option,
                       MultiValueContainer,
@@ -229,7 +229,6 @@ const ProjectAddMembersForm = forwardRef((props: any, ref: any) => {
                       input: (base) => ({
                         ...base,
                         margin: "0px",
-                        padding: "0px",
                         minHeight: "54px",
                         backgroundColor: "hsl(var(--popover))",
                       }),
@@ -250,9 +249,9 @@ const ProjectAddMembersForm = forwardRef((props: any, ref: any) => {
                         border: "none",
                         boxShadow: "none",
                         backgroundColor: "hsl(var(--popover))",
-                        padding: "6px",
+                        padding: "4px 0px",
+                        borderBottom: "1px solid hsl(var(--border))",
                         "&:hover": {
-                          border: "none",
                           boxShadow: "none",
                           background: "hsl(var(--popover))",
                         },
