@@ -40,6 +40,26 @@ export async function GET(req: NextRequest, { params }: any) {
           },
         },
         technologies: true,
+        members: {
+          select: {
+            id: true,
+            image: true,
+            username: true,
+            role: true,
+            profile: {
+              select: {
+                designation: true,
+                company: true,
+                linkedin: true,
+                twitter: true,
+                github: true,
+                instagram: true,
+                facebook: true,
+                gender: true,
+              },
+            },
+          },
+        },
       },
     });
 
@@ -98,6 +118,32 @@ export async function PATCH(req: NextRequest, { params }: any) {
         technologies: {
           set: body.technologies,
         },
+        members: {
+          set: body.members,
+        },
+      },
+      include: {
+        members: {
+          select: {
+            id: true,
+            image: true,
+            username: true,
+            role: true,
+            profile: {
+              select: {
+                designation: true,
+                company: true,
+                linkedin: true,
+                twitter: true,
+                github: true,
+                instagram: true,
+                facebook: true,
+                gender: true,
+              },
+            },
+          },
+        },
+        technologies: true,
       },
     });
 
