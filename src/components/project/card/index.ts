@@ -1,6 +1,7 @@
 export { default as ProjectDeadlineDisplay } from "./ProjectDeadlineDisplay";
 export { default as ProjectDropdownActions } from "./ProjectDropdownActions";
 export { default as ProjectLinksDisplay } from "./ProjectLinksDisplay";
+export { default as ProjectMembers } from "./ProjectMembers";
 export { default as ProjectPriorityDisplay } from "./ProjectPriorityDisplay";
 export { default as ProjectStageDisplay } from "./ProjectStageDisplay";
 export { default as ProjectStatusDisplay } from "./ProjectStatusDisplay";

@@ -1,5 +1,7 @@
 export { default as CreateNewProject } from "./CreateNewProject";
 export { default as CreateProjectForm } from "./CreateProjectForm";
+export { default as ProjectAddMembers } from "./ProjectAddMembers";
+export { default as ProjectAddMembersForm } from "./ProjectAddMembersForm";
 export { default as ProjectCard } from "./ProjectCard";
 export { default as ProjectCreateTagForm } from "./ProjectCreateTagForm";
 export { default as ProjectDetailsCard } from "./ProjectDetailsCard";
