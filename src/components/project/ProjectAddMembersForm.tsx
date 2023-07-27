@@ -168,6 +168,7 @@ const ProjectAddMembersForm = forwardRef((props: any, ref: any) => {
         members: valueFormatter(json.data.members),
       });
       mutate(`${process.env.NEXT_API_URL}/projects/${json.data.slug}/`);
+      mutate(`${process.env.NEXT_API_URL}/projects/`);
     } catch (error: any) {
       toast.error(error.message);
       setIsLoading(false);
