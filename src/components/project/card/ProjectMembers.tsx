@@ -1,13 +1,48 @@
 import { UserHoverCard } from "@/components/profile";
 import { ProjectAddMembers } from "@/components/project";
-import { forwardRef } from "react";
-const ProjectMembers = forwardRef((props: any, ref) => {
-  const { members } = props;
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import slice from "lodash/slice";
+import { FC, forwardRef } from "react";
+
+interface ProjectMembers {
+  members: any[];
+  projectId: any;
+  size?: "small";
+}
+
+const ProjectAllMemberPopover = ({ members }: any) => {
   return (
-    <div className="flex gap-2">
-      {members?.map((member: any) => (
-        <UserHoverCard key={member.id} item={member} />
+    <Popover>
+      <PopoverTrigger asChild>
+        <div className="flex items-center justify-center bg-primary rounded-full w-10 h-10 cursor-pointer">
+          <p className="text-sm font-semibold text-primary-foreground">
+            +{members.length - 2}
+          </p>
+        </div>
+      </PopoverTrigger>
+      <PopoverContent className="bg-popover sm:max-w-screen-md min-h-fit flex flex-col items-start justify-start gap-6 p-4">
+        <div className="flex flex-row items-start justify-start gap-4 w-full">
+          {members.map((member: any, index: any) => (
+            <UserHoverCard key={index} item={member} />
+          ))}
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+};
+
+const ProjectMembers: FC<ProjectMembers> = forwardRef((props, ref) => {
+  const { members, size } = props || {};
+  return (
+    <div className="flex gap-1">
+      {slice(members, 0, 2).map((member, index) => (
+        <UserHoverCard key={index} item={member} size={size} />
       ))}
+      {members?.length > 2 && <ProjectAllMemberPopover members={members} />}
       <ProjectAddMembers {...props} />
     </div>
   );
