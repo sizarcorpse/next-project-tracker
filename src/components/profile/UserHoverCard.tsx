@@ -11,7 +11,7 @@ const UserHoverCardLoading = () => {
   return <Skeleton className="h-10 w-10 rounded-full bg-card" />;
 };
 
-const UserHoverCard = ({ item, open }: any) => {
+const UserHoverCard = ({ item, open, size }: any) => {
   if (!item) return <UserHoverCardLoading />;
   const {
     username,
@@ -34,7 +34,11 @@ const UserHoverCard = ({ item, open }: any) => {
   return (
     <HoverCard open={open}>
       <HoverCardTrigger asChild>
-        <Avatar className="cursor-pointer">
+        <Avatar
+          className={`cursor-pointer ${
+            size === "small" ? "w-7 h-7" : "w-10 h-10"
+          }`}
+        >
           <AvatarImage src={avatarSrc} />
           <AvatarFallback />
         </Avatar>
