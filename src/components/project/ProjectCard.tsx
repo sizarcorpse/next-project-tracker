@@ -7,6 +7,7 @@ import { Card } from "../ui/card";
 import {
   ProjectDeadlineDisplay,
   ProjectDropdownActions,
+  ProjectMembers,
   ProjectPriorityDisplay,
   ProjectStageDisplay,
   ProjectTypeDisplay,
@@ -60,7 +61,12 @@ const ProjectCard = ({ project }: any) => {
       </div>
       <div className="w-full px-2 py-3 flex flex-col items-start justify-between gap-2 flex-1">
         <ProjectTitle title={project.title} />
-        <div className="flex flex-row items-center justify-end w-full">
+        <div className="flex flex-row items-center justify-between w-full">
+          <ProjectMembers
+            members={project.members}
+            projectId={project.id}
+            size="small"
+          />
           <div>
             <Button variant="ghost" className="text-sm h-auto p-2">
               <ListTodo className="h-4 w-4 mr-1" />
