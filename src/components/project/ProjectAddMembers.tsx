@@ -1,19 +1,28 @@
 import { ProjectAddMembersForm } from "@/components/project/";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { cn } from "@/libs/utils";
 import { Plus } from "lucide-react";
 import { FC, forwardRef } from "react";
-
 interface ProjectAddMembers {
   members: any[];
   projectId: any;
+  size?: "small";
 }
 
 const ProjectAddMembers: FC<ProjectAddMembers> = forwardRef((props, ref) => {
+  const { size } = props || {};
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="secondary" className="rounded-full w-10 p-0">
+        <Button
+          variant="secondary"
+          className={cn(
+            `rounded-full h-auto p-0 ${
+              size === "small" ? "w-7 h-7" : "w-10 h-10"
+            }`
+          )}
+        >
           <Plus className="w-4 h-4" />
         </Button>
       </DialogTrigger>
