@@ -14,6 +14,7 @@ export default async function getTeamMembers() {
   try {
     const users = await prisma.user.findMany({
       select: {
+        id: true,
         image: true,
         username: true,
         role: true,
