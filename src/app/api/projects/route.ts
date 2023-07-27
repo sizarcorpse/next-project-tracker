@@ -43,7 +43,26 @@ export async function GET(req: NextRequest) {
             },
           },
         },
-        tags: true,
+        members: {
+          select: {
+            id: true,
+            image: true,
+            username: true,
+            role: true,
+            profile: {
+              select: {
+                designation: true,
+                company: true,
+                linkedin: true,
+                twitter: true,
+                github: true,
+                instagram: true,
+                facebook: true,
+                gender: true,
+              },
+            },
+          },
+        },
       },
       skip: (page - 1) * limit,
       take: limit,
@@ -91,6 +110,11 @@ export async function POST(req: NextRequest) {
         visibility,
         stage,
         createdBy: {
+          connect: {
+            id: session.user.id,
+          },
+        },
+        members: {
           connect: {
             id: session.user.id,
           },
