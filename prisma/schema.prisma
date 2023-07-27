@@ -28,6 +28,7 @@ model User {
   completedTasks      Task[]       @relation("CompletedTasks")
   inProgressBy        Task[]       @relation("InProgressTasks")
   createdTechnologies Technology[] @relation("CreatedTechnologies")
+  assignPorjects      Project[]    @relation("ProjectMembers")
   comments            Comment[]
 }
 
@@ -144,6 +145,7 @@ model Project {
   tasks           Task[]
   comments        Comment[]
   tags            Tag[]             @relation("ProjectTags")
+  members         User[]            @relation("ProjectMembers")
   client          Client?           @relation("ClientProjects", fields: [clientId], references: [id])
   clientId        String?
 
