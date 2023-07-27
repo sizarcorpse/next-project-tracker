@@ -7,6 +7,7 @@ import {
   ProjectDeadlineDisplay,
   ProjectDropdownActions,
   ProjectLinksDisplay,
+  ProjectMembers,
   ProjectPriorityDisplay,
   ProjectStageDisplay,
   ProjectStatusDisplay,
@@ -25,10 +26,12 @@ const ProjectCoverImage = ({ image }: any) => {
   return (
     <div className="w-full">
       <Image
-        src={image || "/assets/images/project-card-placeholder-1.jpg"}
-        width={720}
+        src={image || "/assets/images/project-card-placeholder-2.jpg"}
+        width={1024}
         height={450}
         alt="Project Cover Image"
+        quality={100}
+        priority={true}
         style={{ objectFit: "cover", aspectRatio: "16/5" }}
       />
     </div>
@@ -62,7 +65,7 @@ const ProjectDescription = ({ description }: any) => {
 const ProjectDetailsCard = () => {
   const { project: project_slug } = useParams();
   const { data, isLoading } = useSwr(
-    `${process.env.NEXT_API_URL}/projects/${project_slug}`
+    `${process.env.NEXT_API_URL}/projects/${project_slug}/`
   );
 
   const project = data?.data || {};
@@ -79,10 +82,13 @@ const ProjectDetailsCard = () => {
               projectSlug={project.slug}
             />
           </div>
-          <div className="inline-flex items-center gap-2">
-            <ProjectVisibilityDisplay visibility={project.visibility} />
-            <ProjectStatusDisplay status={project.status} />
-            <ProjectDeadlineDisplay deadline={project.endDate} />
+          <div className="w-full flex items-center justify-between gap-2">
+            <div className="inline-flex items-center gap-2">
+              <ProjectVisibilityDisplay visibility={project.visibility} />
+              <ProjectStatusDisplay status={project.status} />
+              <ProjectDeadlineDisplay deadline={project.endDate} />
+            </div>
+            <ProjectMembers members={project.members} projectId={project.id} />
           </div>
         </div>
       </div>
