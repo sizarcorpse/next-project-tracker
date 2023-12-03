@@ -3,8 +3,11 @@
 import { ProjectCard } from "@/components/project";
 import useSWR from "swr";
 
-const ProjectsCollection = () => {
-  const { data, error } = useSWR(`${process.env.NEXT_API_URL}/projects/`);
+const ProjectsCollection = ({ initialData }: any) => {
+  const { data, error } = useSWR(`${process.env.NEXT_API_URL}/projects/`, {
+    initialData: initialData,
+    revalidateOnMount: true,
+  });
 
   return (
     <div>
