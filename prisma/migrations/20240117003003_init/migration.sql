@@ -1,8 +1,8 @@
 -- CreateEnum
-CREATE TYPE "ProjectStatus" AS ENUM ('ACTIVE', 'INACTIVE', 'ARCHIVED');
+CREATE TYPE "ProjectStatus" AS ENUM ('ACTIVE', 'INACTIVE', 'ARCHIVED', 'DRAFT');
 
 -- CreateEnum
-CREATE TYPE "ProjectPriority" AS ENUM ('LOW', 'MEDIUM', 'HIGH');
+CREATE TYPE "ProjectPriority" AS ENUM ('LOWEST', 'LOW', 'MEDIUM', 'HIGH', 'HIGHEST');
 
 -- CreateEnum
 CREATE TYPE "ProjectVisibility" AS ENUM ('PUBLIC', 'PRIVATE');
@@ -11,10 +11,75 @@ CREATE TYPE "ProjectVisibility" AS ENUM ('PUBLIC', 'PRIVATE');
 CREATE TYPE "ProjectType" AS ENUM ('WEB', 'APP', 'GAME', 'DESKTOP', 'API', 'LIBRARY', 'DATA', 'HARDWARE', 'OTHER');
 
 -- CreateEnum
+CREATE TYPE "ProjectStage" AS ENUM ('CONCEPT', 'PLANNING', 'DESIGN', 'DEVELOPMENT', 'TESTING', 'DEPLOYMENT', 'MAINTENANCE');
+
+-- CreateEnum
 CREATE TYPE "TaskStatus" AS ENUM ('ACTIVE', 'COMPLETED', 'CANCELED');
 
 -- CreateEnum
 CREATE TYPE "TaskPriority" AS ENUM ('LOW', 'MEDIUM', 'HIGH');
+
+-- CreateTable
+CREATE TABLE "User" (
+    "id" TEXT NOT NULL,
+    "name" TEXT,
+    "username" TEXT,
+    "role" TEXT NOT NULL DEFAULT 'user',
+    "email" TEXT,
+    "emailVerified" TIMESTAMP(3),
+    "image" TEXT,
+    "password" TEXT,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Profile" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "designation" TEXT DEFAULT '',
+    "company" TEXT DEFAULT '',
+    "website" TEXT DEFAULT '',
+    "location" TEXT DEFAULT '',
+    "gender" TEXT DEFAULT '',
+    "bio" TEXT DEFAULT '',
+    "linkedin" TEXT DEFAULT '',
+    "github" TEXT DEFAULT '',
+    "twitter" TEXT DEFAULT '',
+    "facebook" TEXT DEFAULT '',
+    "instagram" TEXT DEFAULT '',
+    "contact" TEXT DEFAULT '',
+
+    CONSTRAINT "Profile_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Account" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "type" TEXT NOT NULL,
+    "provider" TEXT NOT NULL,
+    "providerAccountId" TEXT NOT NULL,
+    "refresh_token" TEXT,
+    "access_token" TEXT,
+    "expires_at" INTEGER,
+    "token_type" TEXT,
+    "scope" TEXT,
+    "id_token" TEXT,
+    "session_state" TEXT,
+
+    CONSTRAINT "Account_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Session" (
+    "id" TEXT NOT NULL,
+    "sessionToken" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "expires" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Session_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Project" (
@@ -29,8 +94,9 @@ CREATE TABLE "Project" (
     "content" JSONB,
     "type" "ProjectType" NOT NULL DEFAULT 'OTHER',
     "visibility" "ProjectVisibility" NOT NULL DEFAULT 'PUBLIC',
-    "status" "ProjectStatus" NOT NULL DEFAULT 'ACTIVE',
+    "status" "ProjectStatus" NOT NULL DEFAULT 'DRAFT',
     "priority" "ProjectPriority" NOT NULL DEFAULT 'MEDIUM',
+    "stage" "ProjectStage" NOT NULL DEFAULT 'CONCEPT',
     "startDate" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "endDate" TIMESTAMP(3),
     "figmaLink" TEXT DEFAULT '',
@@ -87,14 +153,20 @@ CREATE TABLE "Tag" (
     "name" TEXT NOT NULL,
     "color" TEXT,
     "icon" TEXT,
+    "slug" TEXT NOT NULL,
 
     CONSTRAINT "Tag_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Technology" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "createdByUserId" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "slug" TEXT NOT NULL,
+    "label" TEXT,
     "icon" TEXT,
 
     CONSTRAINT "Technology_pkey" PRIMARY KEY ("id")
@@ -114,7 +186,7 @@ CREATE TABLE "Client" (
 -- CreateTable
 CREATE TABLE "_ProjectTechnologies" (
     "A" TEXT NOT NULL,
-    "B" INTEGER NOT NULL
+    "B" TEXT NOT NULL
 );
 
 -- CreateTable
@@ -124,10 +196,31 @@ CREATE TABLE "_ProjectTags" (
 );
 
 -- CreateTable
+CREATE TABLE "_ProjectMembers" (
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
+);
+
+-- CreateTable
 CREATE TABLE "_TaskTags" (
     "A" TEXT NOT NULL,
     "B" TEXT NOT NULL
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Profile_userId_key" ON "Profile"("userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Account_provider_providerAccountId_key" ON "Account"("provider", "providerAccountId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Session_sessionToken_key" ON "Session"("sessionToken");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Project_slug_key" ON "Project"("slug");
@@ -166,10 +259,16 @@ CREATE INDEX "Comment_taskId_idx" ON "Comment"("taskId");
 CREATE INDEX "Comment_projectId_idx" ON "Comment"("projectId");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Tag_slug_key" ON "Tag"("slug");
+
+-- CreateIndex
 CREATE INDEX "Tag_name_idx" ON "Tag"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Technology_name_key" ON "Technology"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Technology_slug_key" ON "Technology"("slug");
 
 -- CreateIndex
 CREATE INDEX "Technology_name_idx" ON "Technology"("name");
@@ -193,10 +292,25 @@ CREATE UNIQUE INDEX "_ProjectTags_AB_unique" ON "_ProjectTags"("A", "B");
 CREATE INDEX "_ProjectTags_B_index" ON "_ProjectTags"("B");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "_ProjectMembers_AB_unique" ON "_ProjectMembers"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_ProjectMembers_B_index" ON "_ProjectMembers"("B");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "_TaskTags_AB_unique" ON "_TaskTags"("A", "B");
 
 -- CreateIndex
 CREATE INDEX "_TaskTags_B_index" ON "_TaskTags"("B");
+
+-- AddForeignKey
+ALTER TABLE "Profile" ADD CONSTRAINT "Profile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Project" ADD CONSTRAINT "Project_createdByUserId_fkey" FOREIGN KEY ("createdByUserId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -232,6 +346,9 @@ ALTER TABLE "Comment" ADD CONSTRAINT "Comment_projectId_fkey" FOREIGN KEY ("proj
 ALTER TABLE "Comment" ADD CONSTRAINT "Comment_replyToId_fkey" FOREIGN KEY ("replyToId") REFERENCES "Comment"("id") ON DELETE CASCADE ON UPDATE NO ACTION;
 
 -- AddForeignKey
+ALTER TABLE "Technology" ADD CONSTRAINT "Technology_createdByUserId_fkey" FOREIGN KEY ("createdByUserId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "_ProjectTechnologies" ADD CONSTRAINT "_ProjectTechnologies_A_fkey" FOREIGN KEY ("A") REFERENCES "Project"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -242,6 +359,12 @@ ALTER TABLE "_ProjectTags" ADD CONSTRAINT "_ProjectTags_A_fkey" FOREIGN KEY ("A"
 
 -- AddForeignKey
 ALTER TABLE "_ProjectTags" ADD CONSTRAINT "_ProjectTags_B_fkey" FOREIGN KEY ("B") REFERENCES "Tag"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_ProjectMembers" ADD CONSTRAINT "_ProjectMembers_A_fkey" FOREIGN KEY ("A") REFERENCES "Project"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_ProjectMembers" ADD CONSTRAINT "_ProjectMembers_B_fkey" FOREIGN KEY ("B") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_TaskTags" ADD CONSTRAINT "_TaskTags_A_fkey" FOREIGN KEY ("A") REFERENCES "Tag"("id") ON DELETE CASCADE ON UPDATE CASCADE;
