@@ -1,10 +1,10 @@
-import { UserHoverCard } from "@/components/profile";
 import { ProjectAddMembers } from "@/components/project";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { UserHoverCard } from "@/components/user";
 import slice from "lodash/slice";
 import { FC, forwardRef } from "react";
 

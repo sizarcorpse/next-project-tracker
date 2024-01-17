@@ -1,7 +1,6 @@
 "use client";
 
 import { PTDialog } from "@/components/common";
-import { UserHoverCard } from "@/components/profile";
 import { ProjectInstruction } from "@/components/project";
 import {
   ProjectDeadlineDisplay,
@@ -17,6 +16,7 @@ import {
   ProjectVisibilityDisplay,
 } from "@/components/project/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { UserHoverCard } from "@/components/user";
 import { useDialog } from "@/hooks/";
 import Image from "next/image";
 import { useParams } from "next/navigation";

@@ -1,10 +1,10 @@
-import { getCurrentUser } from "@/actions";
-import { NavigationBar } from "@/components/navigation";
+import { getUserServerSession } from "@/actions";
+import { AppBar } from "@/components/appBar";
 import { ThemeProvider } from "@/providers/";
 import { NextAuthProvider } from "@/providers/NextAuthProvider";
 import ToasterProvider from "@/providers/ToasterProvider";
 import "@/styles/globals.css";
-
+import { Session } from "next-auth";
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -19,15 +19,14 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const user = await getCurrentUser();
-
+  const { user } = ((await getUserServerSession()) as Session) || {};
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} bg-background`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NextAuthProvider>
             <ToasterProvider />
-            <NavigationBar user={user as any} />
+            <AppBar user={user} />
             {children}
           </NextAuthProvider>
         </ThemeProvider>
