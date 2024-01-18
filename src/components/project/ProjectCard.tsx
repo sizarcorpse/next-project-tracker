@@ -1,5 +1,5 @@
-import { UserHoverCard } from "@/components/profile";
 import { Button } from "@/components/ui/button";
+import { UserHoverCard } from "@/components/user";
 import { ListTodo, MessagesSquare } from "lucide-react";
 import Image from "next/image";
 import { Card } from "../ui/card";

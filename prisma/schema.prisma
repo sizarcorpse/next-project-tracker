@@ -22,6 +22,8 @@ model User {
   profile             Profile?
   accounts            Account[]
   sessions            Session[]
+  roleId              String?
+  Role                Role?        @relation(fields: [roleId], references: [roleId])
   projects            Project[]
   createdTasks        Task[]       @relation("CreatedTasks")
   assignedTasks       Task[]       @relation("AssignedTasks")
@@ -30,24 +32,62 @@ model User {
   createdTechnologies Technology[] @relation("CreatedTechnologies")
   assignPorjects      Project[]    @relation("ProjectMembers")
   comments            Comment[]
+
+  @@index([username])
+  @@index([username, roleId])
+}
+
+model Role {
+  roleId      String       @id @default(uuid())
+  name        String       @unique
+  permissions Permission[] @relation("RoleToPermission")
+  users       User[]
+}
+
+model Permission {
+  permissionId String @id @default(uuid())
+  name         String @unique
+  roles        Role[] @relation("RoleToPermission")
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+  NOT_SELECTED
+}
+
+enum Pronouns {
+  HE_HIM
+  SHE_HER
+  THEY_THEM
+  DONT_SPECIFY
+  OTHER
 }
 
 model Profile {
-  id          String  @id @default(uuid())
-  userId      String  @unique
-  designation String? @default("")
-  company     String? @default("")
-  website     String? @default("")
-  location    String? @default("")
-  gender      String? @default("")
-  bio         String? @default("")
-  linkedin    String? @default("")
-  github      String? @default("")
-  twitter     String? @default("")
-  facebook    String? @default("")
-  instagram   String? @default("")
-  contact     String? @default("")
-  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  profileId   String    @id @default(uuid())
+  userId      String    @unique
+  designation String?   @default("")
+  company     String?   @default("")
+  website     String?   @default("")
+  location    String?   @default("")
+  publicEmail String?   @default("")
+  publicPhone String?   @default("")
+  gender      Gender?   @default(NOT_SELECTED)
+  pronouns    Pronouns? @default(DONT_SPECIFY)
+  headline    String?   @default("")
+  biography   Json?     @default("{}") @db.Json
+  dateOfBirth DateTime? @default(now()) @db.Date
+  linkedin    String?   @default("")
+  github      String?   @default("")
+  twitter     String?   @default("")
+  facebook    String?   @default("")
+  instagram   String?   @default("")
+  discord     String?   @default("")
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([profileId, userId])
 }
 
 model Account {
