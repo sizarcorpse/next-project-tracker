@@ -8,6 +8,7 @@ export { default as ProfileCardInfo } from "./profile/ProfileCardInfo";
 export { default as ProfileCardSocial } from "./profile/ProfileCardSocial";
 export { default as ProfilePhoto } from "./profile/ProfilePhoto";
 export { default as ProfileUpdateForm } from "./profile/ProfileUpdateForm";
+export { default as UpdateProfilePhoto } from "./profile/UpdateProfilePhoto";
 export { default as UserAccountSettingForm } from "./profile/UserAccountSettingForm";
 export { default as UserHoverCard } from "./profile/UserHoverCard";
 export { default as UserRoleChip } from "./profile/UserRoleChip";
