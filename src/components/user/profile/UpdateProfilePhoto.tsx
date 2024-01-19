@@ -41,6 +41,9 @@ const UpdateProfilePhoto = () => {
             <UploadDropzone
               className=" bg-primary-foreground rounded-xl w-full h-72"
               endpoint="imageUploader"
+              config={{
+                mode: "auto",
+              }}
               content={{
                 uploadIcon: () => (
                   <ImagePlus className="w-8 h-8" strokeWidth={1.75} />
@@ -61,12 +64,15 @@ const UpdateProfilePhoto = () => {
               }}
               onClientUploadComplete={async (res) => {
                 try {
-                  const r = await updateUserProfilePhoto(res[0].url);
-                  if (r) {
-                    toast.success("Profile Photo updated!");
+                  const r = await updateUserProfilePhoto(res[0]);
+                  if (r.status === "error") {
+                    toast.error(r.message);
+                    return;
                   }
-                } catch (error) {
-                  toast.error("Something went wrong!");
+
+                  toast.success("Profile Photo updated!");
+                } catch (error: any) {
+                  toast.error(error?.message);
                 }
               }}
               onUploadError={(error: Error) => {
