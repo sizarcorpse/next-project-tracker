@@ -5,7 +5,7 @@ import { Profile, Role, User } from "@prisma/client";
 export const dynamic = "force-dynamic";
 
 interface UserWithRole extends User {
-  Role: Role;
+  role: Role;
 }
 
 // async function getUserData() {

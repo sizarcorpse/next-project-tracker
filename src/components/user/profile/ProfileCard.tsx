@@ -9,7 +9,7 @@ import {
 } from "@/components/user/";
 
 interface Ux extends User {
-  Role: Role;
+  role: Role;
 }
 
 interface ProfileCardProps {
@@ -31,7 +31,7 @@ const ProfileCard: FC<ProfileCardProps> = ({ profile, user }) => {
           email={user?.email}
           image={user?.image}
           gender={profile?.gender}
-          role={user?.Role?.name}
+          role={user?.role?.name}
         />
         <ProfileHeader headline={profile?.headline} />
         <ProfileCardContact

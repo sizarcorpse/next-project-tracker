@@ -18,7 +18,7 @@ export default async function getCurrentUser() {
         email: session.user.email as string,
       },
       include: {
-        Role: {
+        role: {
           select: {
             name: true,
           },
