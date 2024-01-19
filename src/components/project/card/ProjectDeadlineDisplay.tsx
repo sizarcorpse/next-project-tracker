@@ -9,7 +9,7 @@ import { Clock } from "lucide-react";
 import { FC } from "react";
 
 type ProjectDeadlineDisplayProps = {
-  deadline: string;
+  deadline?: Date | null;
   size?: "small";
 };
 
