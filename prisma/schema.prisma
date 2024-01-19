@@ -14,7 +14,6 @@ model User {
   id                  String       @id @default(uuid())
   name                String?
   username            String?      @unique
-  role                String       @default("user")
   email               String?      @unique
   emailVerified       DateTime?
   image               String?
@@ -23,7 +22,7 @@ model User {
   accounts            Account[]
   sessions            Session[]
   roleId              String?
-  Role                Role?        @relation(fields: [roleId], references: [roleId])
+  role                Role?        @relation(fields: [roleId], references: [roleId])
   projects            Project[]
   createdTasks        Task[]       @relation("CreatedTasks")
   assignedTasks       Task[]       @relation("AssignedTasks")

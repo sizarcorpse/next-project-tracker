@@ -4,18 +4,26 @@ const prisma = new PrismaClient();
 
 async function main() {
   const permissions = [
+    "create:user",
     "read:user",
-    "write:user",
+    "update:user",
     "delete:user",
+    "create:profile",
     "read:profile",
-    "write:profile",
+    "update:profile",
     "delete:profile",
+    "create:role",
     "read:role",
-    "write:role",
+    "update:role",
     "delete:role",
+    "create:permission",
     "read:permission",
-    "write:permission",
+    "update:permission",
     "delete:permission",
+    "create:project",
+    "read:project",
+    "update:project",
+    "delete:project",
   ];
 
   const roles = [
@@ -24,10 +32,10 @@ async function main() {
       name: "USER",
       permissions: [
         "read:user",
-        "write:user",
+        "update:user",
         "delete:user",
         "read:profile",
-        "write:profile",
+        "update:profile",
         "delete:profile",
       ],
     },
