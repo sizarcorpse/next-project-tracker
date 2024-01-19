@@ -1,5 +1,5 @@
 import { getTeamMembers } from "@/actions";
-import { TeamHoverCard } from "@/components/team";
+import { UserHoverCard } from "@/components/user";
 
 import {
   Card,
@@ -34,8 +34,8 @@ const TeamOverview = async () => {
       <ScrollArea className="h-28">
         <div className="pr-4 w-full flex flex-row items-start justify-start gap-2 flex-wrap">
           {teams &&
-            teams.map((item: any) => (
-              <TeamHoverCard key={item.id} item={item} />
+            teams.map((user: any) => (
+              <UserHoverCard key={user.id} user={user} />
             ))}
         </div>
       </ScrollArea>

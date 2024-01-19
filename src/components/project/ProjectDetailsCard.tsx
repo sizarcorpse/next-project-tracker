@@ -76,7 +76,7 @@ const ProjectDetailsCard = () => {
         <ProjectCoverImage image={project.coverImage} />
         <div className="absolute top-0 h-full w-full p-4 flex flex-col items-start justify-between">
           <div className="w-full flex items-start justify-between gap-4">
-            <UserHoverCard item={project.createdBy} />
+            <UserHoverCard user={project.createdBy} />
             <ProjectDropdownActions
               projectId={project.id}
               projectSlug={project.slug}

@@ -1,9 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { UserHoverCard } from "@/components/user";
-import { ListTodo, MessagesSquare } from "lucide-react";
-import Image from "next/image";
-import { Card } from "../ui/card";
-
 import {
   ProjectDeadlineDisplay,
   ProjectDropdownActions,
@@ -12,6 +6,23 @@ import {
   ProjectStageDisplay,
   ProjectTypeDisplay,
 } from "@/components/project/card";
+import { Button } from "@/components/ui/button";
+import { UserHoverCard } from "@/components/user";
+import { Profile, Project, Role, User } from "@prisma/client";
+import { ListTodo, MessagesSquare } from "lucide-react";
+import Image from "next/image";
+import { FC } from "react";
+import { Card } from "../ui/card";
+
+type ProjectCardProps = {
+  project: Project & {
+    createdBy: User & {
+      role: Role;
+      profile: Profile;
+    };
+    members: User[];
+  };
+};
 
 const ProjectTitle = ({ title }: { title: string }) => {
   return (
@@ -21,7 +32,7 @@ const ProjectTitle = ({ title }: { title: string }) => {
   );
 };
 
-const ProjectCard = ({ project }: any) => {
+const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
   return (
     <Card className="w-full h-full max-w-80 flex flex-col items-start justify-start transition-colors overflow-hidden">
       <div className="relative h-full max-h-40 overflow-hidden">
@@ -40,7 +51,7 @@ const ProjectCard = ({ project }: any) => {
         <div className="absolute top-0 left-0 w-full h-full bg-[#111827] opacity-30"></div>
         <div className="absolute top-0 left-0 w-full h-full flex flex-col items-start justify-between p-2">
           <div className="w-full flex flex-row items-center justify-between">
-            <UserHoverCard item={project.createdBy} />
+            <UserHoverCard user={project.createdBy} />
             <ProjectDropdownActions
               projectId={project.id}
               projectSlug={project.slug}

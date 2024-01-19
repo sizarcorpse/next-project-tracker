@@ -27,7 +27,7 @@ const ProjectAllMemberPopover = ({ members }: any) => {
       <PopoverContent className="bg-popover sm:max-w-screen-md min-h-fit flex flex-col items-start justify-start gap-6 p-4">
         <div className="flex flex-row items-start justify-start gap-4 w-full">
           {members.map((member: any, index: any) => (
-            <UserHoverCard key={index} item={member} />
+            <UserHoverCard key={index} user={member} />
           ))}
         </div>
       </PopoverContent>
@@ -40,7 +40,7 @@ const ProjectMembers: FC<ProjectMembers> = forwardRef((props, ref) => {
   return (
     <div className="flex gap-1">
       {slice(members, 0, 2).map((member, index) => (
-        <UserHoverCard key={index} item={member} size={size} />
+        <UserHoverCard key={index} user={member} size={size} />
       ))}
       {members?.length > 2 && <ProjectAllMemberPopover members={members} />}
       <ProjectAddMembers {...props} />
