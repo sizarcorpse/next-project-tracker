@@ -6,3 +6,4 @@ export { default as getUser } from "./user/getUser";
 export { default as getUserProfile } from "./user/getUserProfile";
 export { default as updateUser } from "./user/updateUser";
 export { default as updateUserProfile } from "./user/updateUserProfile";
+export { default as updateUserProfilePhoto } from "./user/updateUserProfilePhoto";
