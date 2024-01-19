@@ -101,7 +101,7 @@ export const authOptions: NextAuthOptions = {
         },
         include: {
           profile: true,
-          Role: {
+          role: {
             include: {
               permissions: true,
             },
@@ -143,11 +143,11 @@ export const authOptions: NextAuthOptions = {
         );
       }
 
-      if (!u.Role || u.Role === null) {
+      if (!u.role || u.role === null) {
         operations.push(
           prisma.user.update({
             data: {
-              Role: {
+              role: {
                 connect: {
                   name: "USER",
                 },
@@ -168,8 +168,8 @@ export const authOptions: NextAuthOptions = {
         email: u.email,
         image: u.image,
         username: u.username,
-        role: u.Role?.name,
-        permissions: u.Role?.permissions.map((p) => p.name),
+        role: u.role?.name,
+        permissions: u.role?.permissions.map((p) => p.name),
       };
     },
   },

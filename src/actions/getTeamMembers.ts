@@ -17,7 +17,7 @@ export default async function getTeamMembers() {
         id: true,
         image: true,
         username: true,
-        Role: {
+        role: {
           select: {
             name: true,
           },
