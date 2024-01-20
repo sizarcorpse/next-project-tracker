@@ -10,13 +10,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const TeamOverview = async () => {
-  let teams = [] as any;
-
-  try {
-    teams = await getTeamMembers();
-  } catch (error) {
-    throw new Error("Failed to fetch data");
-  }
+  const teams = await getTeamMembers();
 
   return (
     <Card className="flex flex-col items-start justify-start gap-6 p-4 h-max">

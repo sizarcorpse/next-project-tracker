@@ -1,18 +1,22 @@
-import { authOptions } from "@/libs/auth";
 import { prisma } from "@/libs/prisma";
-import { getServerSession } from "next-auth/next";
-
-export async function getSession() {
-  try {
-    return await getServerSession(authOptions);
-  } catch (error: any) {
-    throw new Error(error);
-  }
-}
 
 export default async function getTeamMembers() {
   try {
     const users = await prisma.user.findMany({
+      where: {
+        OR: [
+          {
+            role: {
+              name: "PROJECT MANAGER",
+            },
+          },
+          {
+            role: {
+              name: "TEAM MEMBER",
+            },
+          },
+        ],
+      },
       select: {
         id: true,
         image: true,
@@ -26,11 +30,6 @@ export default async function getTeamMembers() {
           select: {
             designation: true,
             company: true,
-            linkedin: true,
-            twitter: true,
-            github: true,
-            instagram: true,
-            facebook: true,
             gender: true,
           },
         },
