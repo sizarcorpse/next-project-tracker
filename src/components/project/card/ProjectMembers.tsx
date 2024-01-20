@@ -14,12 +14,16 @@ interface ProjectMembers {
   size?: "small";
 }
 
-const ProjectAllMemberPopover = ({ members }: any) => {
+const ProjectAllMemberPopover = ({ members, size }: any) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <div className="flex items-center justify-center bg-primary rounded-full w-10 h-10 cursor-pointer">
-          <p className="text-sm font-semibold text-primary-foreground">
+        <div
+          className={`flex items-center justify-center bg-primary rounded-full cursor-pointer ${
+            size === "small" ? "w-7 h-7" : "w-10 h-10"
+          }`}
+        >
+          <p className="text-sm font-medium text-primary-foreground">
             +{members.length - 2}
           </p>
         </div>
@@ -42,7 +46,9 @@ const ProjectMembers: FC<ProjectMembers> = forwardRef((props, ref) => {
       {slice(members, 0, 2).map((member, index) => (
         <UserHoverCard key={index} user={member} size={size} />
       ))}
-      {members?.length > 2 && <ProjectAllMemberPopover members={members} />}
+      {members?.length > 2 && (
+        <ProjectAllMemberPopover members={members} size={size} />
+      )}
       <ProjectAddMembers {...props} />
     </div>
   );
