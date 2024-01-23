@@ -10,87 +10,33 @@ import {
   SelectSeparator,
   SelectTrigger,
 } from "@/components/ui/select";
-import {
-  ArrowUpZA,
-  CalendarCheck,
-  CalendarX,
-  Combine,
-  FolderOpenDot,
-  Trophy,
-  Type,
-} from "lucide-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback } from "react";
-
-const sortOptions = {
-  group_a: [
-    {
-      label: "Project Type",
-      value: "type",
-      icon: <FolderOpenDot className="w-4 h-4" strokeWidth={1.5} />,
-    },
-    {
-      label: "Project Priority",
-      value: "priority",
-      icon: <Trophy className="w-4 h-4" strokeWidth={1.5} />,
-    },
-    {
-      label: "Project Stage",
-      value: "stage",
-      icon: <Combine className="w-4 h-4" strokeWidth={1.5} />,
-    },
-  ],
-  group_b: [
-    {
-      label: "Title",
-      value: "title",
-      icon: <Type className="w-4 h-4" strokeWidth={1.5} />,
-    },
-    {
-      label: "Start Date",
-      value: "startDate",
-      icon: <CalendarCheck className="w-4 h-4" strokeWidth={1.5} />,
-    },
-    {
-      label: "End Date",
-      value: "endDate",
-      icon: <CalendarX className="w-4 h-4" strokeWidth={1.5} />,
-    },
-  ],
-};
+import { useHandleProjectsQuery } from "@/hooks/projects";
+import { sortOptions } from "@/utils/projectsProperties";
+import { ArrowUpZA } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 const ProjectsSort = () => {
-  const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
+  const handleProjectsQuery = useHandleProjectsQuery();
 
   const handleSortValue = (query: string) => {
     const params = new URLSearchParams(searchParams.toString());
     return params.get(query);
   };
 
-  const handleProjectsSort = useCallback(
-    (queryParam: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set(queryParam, value);
-      router.push(pathname + "?" + params.toString());
-    },
-    [pathname, router, searchParams]
-  );
-
   return (
     <div className="flex gap-2">
       <Select
-        onValueChange={(v) => handleProjectsSort("sort", v)}
+        onValueChange={(v) => handleProjectsQuery("sort", v)}
         defaultValue={handleSortValue("sort") || "title"}
       >
         <SelectTrigger
-          className="w-auto px-3 border-none bg-primary/5"
+          className="w-auto px-3 border-none bg-primary/5 rounded-xl"
           hideIndicator
         >
           <ArrowUpZA className="w-4 h-4" strokeWidth={1.5} />
         </SelectTrigger>
-        <SelectContent className="w-64">
+        <SelectContent className="w-64" align="end">
           <SelectGroup>
             <SelectLabel className="flex flex-col gap-2 px-2">
               Sort Projects
@@ -121,23 +67,23 @@ const ProjectsSort = () => {
           <SelectGroup>
             <RadioGroup
               className="gap-y-0"
-              onValueChange={(v) => handleProjectsSort("order", v)}
+              onValueChange={(v) => handleProjectsQuery("order", v)}
               defaultValue={handleSortValue("order") || "asc"}
             >
-              <div className="flex items-center space-x-2 py-1.5 rounded-sm hover:bg-accent px-2">
+              <div className="flex items-center space-x-2 rounded-sm hover:bg-accent px-2">
                 <RadioGroupItem value="asc" id="asc" />
                 <label
                   htmlFor="asc"
-                  className="font-normal text-sm w-full cursor-pointer"
+                  className="font-normal text-sm w-full cursor-pointer  py-1.5"
                 >
                   Ascending
                 </label>
               </div>
-              <div className="flex items-center space-x-2 py-1.5 rounded-sm hover:bg-accent px-2">
+              <div className="flex items-center space-x-2 rounded-sm hover:bg-accent px-2">
                 <RadioGroupItem value="desc" id="desc" />
                 <label
                   htmlFor="desc"
-                  className="font-normal text-sm w-full cursor-pointer"
+                  className="font-normal text-sm w-full cursor-pointer  py-1.5"
                 >
                   Descending
                 </label>
