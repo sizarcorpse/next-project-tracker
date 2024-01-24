@@ -3,9 +3,11 @@ import {
   ThemeToggle,
   UserDropdownMenu,
 } from "@/components/appBar";
-import { Coffee } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Coffee, FolderGit2 } from "lucide-react";
 import { Session } from "next-auth";
 import Link from "next/link";
+
 const Logo = () => {
   return (
     <div className="flex-shrink-0 flex items-center gap-2">
@@ -28,10 +30,22 @@ const Logo = () => {
 
 const AppBar = ({ user }: { user: Session["user"] }) => {
   return (
-    <header className="h-auto sticky top-0 z-30 backdrop-blur-xl">
-      <nav className="flex items-center justify-between p-2 sm:px-6">
+    <header className="sticky top-0 z-30 backdrop-blur-xl h-14">
+      <nav className="flex items-center justify-between p-2 sm:px-6 h-full">
         <Logo />
         <div className="flex items-center gap-3">
+          {/* 
+          // TODO: Remove this link when the projects page is ready
+          */}
+          <Link href="/projects">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="aspect-square p-0 text-primary hover:text-primary/80"
+            >
+              <FolderGit2 className="w-5 h-5" strokeWidth={1.75} />
+            </Button>
+          </Link>
           <ThemeToggle />
           {user ? <UserDropdownMenu user={user} /> : <GuestDropdownMenu />}
         </div>

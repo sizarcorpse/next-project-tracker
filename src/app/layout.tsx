@@ -1,12 +1,12 @@
 import { getUserServerSession } from "@/actions";
 import { AppBar } from "@/components/appBar";
+import { Footer } from "@/components/footer/";
 import { ThemeProvider } from "@/providers/";
 import { NextAuthProvider } from "@/providers/NextAuthProvider";
 import ToasterProvider from "@/providers/ToasterProvider";
 import "@/styles/globals.css";
 import { Session } from "next-auth";
 import { Inter } from "next/font/google";
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -26,8 +26,11 @@ export default async function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NextAuthProvider>
             <ToasterProvider />
-            <AppBar user={user} />
-            {children}
+            <div className="grid h-screen grid-rows-layout">
+              <AppBar user={user} />
+              <main>{children}</main>
+              <Footer />
+            </div>
           </NextAuthProvider>
         </ThemeProvider>
       </body>

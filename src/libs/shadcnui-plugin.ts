@@ -68,6 +68,20 @@ export const shadcnPlugin = plugin(
       body: {
         "@apply bg-background text-foreground": {},
       },
+      "::-webkit-scrollbar": {
+        width: "8px",
+        position: "relative",
+      },
+      "::-webkit-scrollbar-track": {
+        background: "transparent",
+      },
+      "::-webkit-scrollbar-thumb": {
+        background: "#c0c0c0",
+        borderRadius: "16px",
+      },
+      "::-webkit-scrollbar-thumb:hover": {
+        background: "#555",
+      },
     });
   },
   {
@@ -77,6 +91,9 @@ export const shadcnPlugin = plugin(
         padding: "2rem",
       },
       extend: {
+        gridTemplateRows: {
+          layout: "56px 1fr 48px",
+        },
         colors: {
           border: "hsl(var(--border))",
           input: "hsl(var(--input))",
