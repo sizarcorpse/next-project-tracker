@@ -16,5 +16,5 @@ export default withAuth(function middleware(req: NextRequestWithAuth) {}, {
 });
 
 export const config = {
-  matcher: ["/u/:path*"],
+  matcher: ["/u/:path*", "/projects/:path*"],
 };
