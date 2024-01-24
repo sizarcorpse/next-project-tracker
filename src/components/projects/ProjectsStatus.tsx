@@ -24,7 +24,7 @@ const ProjectsStatus = () => {
   };
 
   return (
-    <div className="flex gap-4 items-center">
+    <div className="flex gap-4 items-center min-w-[40px]">
       <Select
         onValueChange={(value: string) => handleProjectsQuery("status", value)}
         defaultValue={handleSortValue("status") || "active"}

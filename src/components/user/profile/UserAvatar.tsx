@@ -29,7 +29,7 @@ const UserAvatar: FC<UserAvatarProps> = ({ size, alt, src }) => {
   }
 
   return (
-    <div>
+    <div className="shrink-0">
       <Image
         src={src || "/assets/images/avatar-placeholder.png"}
         alt={alt || "Avatar"}
