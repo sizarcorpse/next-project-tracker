@@ -16,15 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import {
-  Brush,
-  Info,
-  PocketKnife,
-  Sword,
-  Swords,
-  Trophy,
-  Wrench,
-} from "lucide-react";
+import { Info, Trophy } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import {
@@ -34,38 +26,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-const projectPriorities = [
-  {
-    label: "Lowest",
-    value: "LOWEST",
-    icon: <Brush size={16} />,
-    info: "A lowest priority project is not urgent or important and can be done later or skipped.",
-  },
-  {
-    label: "Low",
-    value: "LOW",
-    icon: <PocketKnife size={16} />,
-    info: "A low priority project is not urgent but somewhat important and can be done after higher priority projects.",
-  },
-  {
-    label: "Medium",
-    value: "MEDIUM",
-    icon: <Wrench size={16} />,
-    info: "A medium priority project is moderately urgent and important and should be done soon.",
-  },
-  {
-    label: "High",
-    value: "HIGH",
-    icon: <Sword size={16} />,
-    info: "A high priority project is very urgent and important and should be done as soon as possible.",
-  },
-  {
-    label: "Highest",
-    value: "HIGHEST",
-    icon: <Swords size={16} />,
-    info: "A highest priority project is extremely urgent and important and should be done immediately.",
-  },
-];
+import { projectPriorities } from "@/utils/projectsProperties";
 
 const ProjectTypeInformation = ({ field }: any) => {
   return (

@@ -33,50 +33,7 @@ import {
   Rocket,
 } from "lucide-react";
 
-const projectStages = [
-  {
-    label: "Concept",
-    value: "CONCEPT",
-    icon: <Lightbulb size={16} />,
-    info: "A concept stage is where the project idea is generated and validated.",
-  },
-  {
-    label: "Planning",
-    value: "PLANNING",
-    icon: <Presentation size={16} />,
-    info: "A planning stage is where the project scope, objectives, timeline, budget, and resources are defined and documented.",
-  },
-  {
-    label: "Design",
-    value: "DESIGN",
-    icon: <Brush size={16} />,
-    info: "A design stage is where the project requirements are translated into visual and functional elements.",
-  },
-  {
-    label: "Development",
-    value: "DEVELOPMENT",
-    icon: <Code size={16} />,
-    info: "A development stage is where the project code and functionality are implemented and integrated.",
-  },
-  {
-    label: "Testing",
-    value: "TESTING",
-    icon: <FlaskConical size={16} />,
-    info: "A testing stage is where the project quality and performance are verified and validated.",
-  },
-  {
-    label: "Deployment",
-    value: "DEPLOYMENT",
-    icon: <Rocket size={16} />,
-    info: "A deployment stage is where the project is delivered and launched to the target audience or market.",
-  },
-  {
-    label: "Maintenance",
-    value: "MAINTENANCE",
-    icon: <Construction size={16} />,
-    info: "A maintenance stage is where the project is monitored and supported for any issues or improvements.",
-  },
-];
+import { projectStages } from "@/utils/projectsProperties";
 
 const ProjectStageInformation = ({ field }: any) => {
   return (

@@ -1,4 +1,30 @@
 import * as z from "zod";
+const validTypeFields = [
+  "web",
+  "app",
+  "game",
+  "desktop",
+  "api",
+  "library",
+  "other",
+  "hardware",
+] as const;
+const validPriorityFields = [
+  "lowest",
+  "low",
+  "medium",
+  "high",
+  "highest",
+] as const;
+const validStageFields = [
+  "concept",
+  "planning",
+  "design",
+  "development",
+  "testing",
+  "deployment",
+  "maintenance",
+] as const;
 
 const technologySchema = z.object({
   value: z.string(),
@@ -21,5 +47,15 @@ const projectSchema = z.object({
   liveLink: z.string().url().or(z.string().nullable()),
   technologies: z.array(technologySchema).optional(),
 });
+
+export const createProjectValidation = z.object({
+  title: z.string().min(3, "Name should be at least 3 characters"),
+  type: z.enum(validTypeFields).optional(),
+  priority: z.enum(validPriorityFields).optional(),
+  visibility: z.enum(["PUBLIC", "PRIVATE"]).optional(),
+  stage: z.enum(validStageFields).optional(),
+});
+
+export type CreateProjectRequest = z.infer<typeof createProjectValidation>;
 
 export default projectSchema;

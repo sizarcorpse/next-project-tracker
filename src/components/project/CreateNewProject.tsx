@@ -47,7 +47,7 @@ const CreateNewProject: FC<CreateNewProjectProps> = ({ variant }: any) => {
           <div className="order-2 basis-7/12 flex flex-col items-start justify-center gap-6 p-4 sm:p-6 md:p-8 lg:p-10 lg:order-1 xl:p-12">
             <CreateProjectForm />
           </div>
-          <div className="order-1 flex w-full h-[240px] basis-5/12 bg-[url('/assets/images/new-project-form-image.jpeg')] bg-cover bg-center lg:order-2 lg:h-auto"></div>
+          <div className="order-1 shrink-0 flex w-full h-[240px] basis-5/12 bg-[url('/assets/images/new-project-form-image.jpeg')] bg-cover bg-center lg:order-2 lg:h-auto"></div>
         </div>
       </SheetContent>
     </Sheet>
