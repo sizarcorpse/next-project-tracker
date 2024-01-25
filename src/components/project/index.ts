@@ -15,6 +15,7 @@ export { default as ProjectInstructionEditor } from "./editor/ProjectInstruction
 export { default as ProjectCurrentStage } from "./fields/ProjectCurrentStage";
 export { default as ProjectEndDate } from "./fields/ProjectEndDate";
 export { default as ProjectPriority } from "./fields/ProjectPriority";
+export { default as ProjectRedirect } from "./fields/ProjectRedirect";
 export { default as ProjectSocialLink } from "./fields/ProjectSocialLink";
 export { default as ProjectStatus } from "./fields/ProjectStatus";
 export { default as ProjectTechnology } from "./fields/ProjectTechnology";
